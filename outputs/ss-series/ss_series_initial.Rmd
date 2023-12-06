@@ -1,0 +1,1275 @@
+---
+title: "Initial presentation of state-space extraction of the time series of diseases"
+author: "D. Erik Boonstra"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    toc: true
+    toc_depth: 2
+    toc_float: TRUE
+---
+
+```{r, include = FALSE}
+R <- list.files(path = "./R", pattern = "*.R", full.names = TRUE)
+sapply(R, source, .GlobalEnv)
+library(knitr)
+library(kableExtra)
+```
+
+# Purpose
+This presentation of these results are to explore the components of the series based on analyatical approach devised by Shumway and Stoffer (6.10). The goal is to see if any series are related to the flu.
+
+# Extraction of series
+The extracted series may be located here, where `in` and `inout` denotes in patient and inpatient and out patient combined, respectively.
+```{r}
+load("./outputs/ss-series/inpatient_extract.RData")
+load("./outputs/ss-series/inoutpatient_extract.RData")
+```
+
+# Results
+
+## Splitting of time series {.tabset .tabset-fade}
+We will be do some splitting of the time series into there global, seasonal, and anomaly + white noise trends.
+
+### Inpatient
+
+#### Influenza
+```{r, echo = FALSE, out.width = "100%"}
+signal_extract_plot(
+  data = flu_in_extract,
+  ylab = "Standardized log(Incidence per 100,000)"
+)
+```
+
+#### Other diseases {.tabset .tabset-fade .tabset-pills}
+
+##### Bronchitis
+```{r, echo = FALSE, out.width = "100%"}
+signal_extract_plot(
+  data = bronchitis_in_extract,
+  ylab = "Standardized log(Incidence per 100,000)"
+)
+```
+
+##### Upper respiratory infections
+```{r, echo = FALSE, out.width = "100%"}
+signal_extract_plot(
+  data = up_resp_in_extract,
+  ylab = "Standardized log(Incidence per 100,000)"
+)
+```
+
+##### Pneumonia
+```{r, echo = FALSE, out.width = "100%"}
+signal_extract_plot(
+  data = pneumonia_in_extract,
+  ylab = "Standardized log(Incidence per 100,000)"
+)
+```
+
+##### Gout
+```{r, echo = FALSE, out.width = "100%"}
+signal_extract_plot(
+  data = gout_in_extract,
+  ylab = "Standardized log(Incidence per 100,000)"
+)
+```
+
+##### Liveborn
+```{r, echo = FALSE, out.width = "100%"}
+signal_extract_plot(
+  data = liveborn_in_extract,
+  ylab = "Standardized log(Incidence per 100,000)"
+)
+```
+
+##### Cancer of breast
+```{r, echo = FALSE, out.width = "100%"}
+signal_extract_plot(
+  data = cancerbreast_in_extract,
+  ylab = "Standardized log(Incidence per 100,000)"
+)
+```
+
+##### Meningitis
+```{r, echo = FALSE, out.width = "100%"}
+signal_extract_plot(
+  data = meningitis_in_extract,
+  ylab = "Standardized log(Incidence per 100,000)"
+)
+```
+
+##### Viral infections
+```{r, echo = FALSE, out.width = "100%"}
+signal_extract_plot(
+  data = viral_in_extract,
+  ylab = "Standardized log(Incidence per 100,000)"
+)
+```
+
+##### Other infections
+```{r, echo = FALSE, out.width = "100%"}
+signal_extract_plot(
+  data = other_infct_in_extract,
+  ylab = "Standardized log(Incidence per 100,000)"
+)
+```
+
+##### Encephalitis
+```{r, echo = FALSE, out.width = "100%"}
+signal_extract_plot(
+  data = encephalitis_in_extract,
+  ylab = "Standardized log(Incidence per 100,000)"
+)
+```
+
+##### Infection of eye
+```{r, echo = FALSE, out.width = "100%"}
+signal_extract_plot(
+  data = eye_infct_in_extract,
+  ylab = "Standardized log(Incidence per 100,000)"
+)
+```
+
+##### Otitis media
+```{r, echo = FALSE, out.width = "100%"}
+signal_extract_plot(
+  data = otitis_in_extract,
+  ylab = "Standardized log(Incidence per 100,000)"
+)
+```
+
+##### AMI
+```{r, echo = FALSE, out.width = "100%"}
+signal_extract_plot(
+  data = ami_in_extract,
+  ylab = "Standardized log(Incidence per 100,000)"
+)
+```
+
+##### Nonspecific chest pain
+```{r, echo = FALSE, out.width = "100%"}
+signal_extract_plot(
+  data = chest_pain_in_extract,
+  ylab = "Standardized log(Incidence per 100,000)"
+)
+```
+
+##### Other diseases of veins
+```{r, echo = FALSE, out.width = "100%"}
+signal_extract_plot(
+  data = other_veins_in_extract,
+  ylab = "Standardized log(Incidence per 100,000)"
+)
+```
+
+##### Tonsillitis
+```{r, echo = FALSE, out.width = "100%"}
+signal_extract_plot(
+  data = tonsillitis_in_extract,
+  ylab = "Standardized log(Incidence per 100,000)"
+)
+```
+
+### Inpatient + Outpatient
+
+#### Influenza
+```{r, echo = FALSE, out.width = "100%"}
+signal_extract_plot(
+  data = flu_inout_extract,
+  ylab = "Standardized log(Incidence per 100,000)"
+)
+```
+
+#### Other diseases {.tabset .tabset-fade .tabset-pills}
+
+##### Bronchitis
+```{r, echo = FALSE, out.width = "100%"}
+signal_extract_plot(
+  data = bronchitis_inout_extract,
+  ylab = "Standardized log(Incidence per 100,000)"
+)
+```
+
+##### Upper respiratory infections
+```{r, echo = FALSE, out.width = "100%"}
+signal_extract_plot(
+  data = up_resp_inout_extract,
+  ylab = "Standardized log(Incidence per 100,000)"
+)
+```
+
+##### Pneumonia
+```{r, echo = FALSE, out.width = "100%"}
+signal_extract_plot(
+  data = pneumonia_inout_extract,
+  ylab = "Standardized log(Incidence per 100,000)"
+)
+```
+
+##### Gout
+```{r, echo = FALSE, out.width = "100%"}
+signal_extract_plot(
+  data = gout_inout_extract,
+  ylab = "Standardized log(Incidence per 100,000)"
+)
+```
+
+##### Liveborn
+```{r, echo = FALSE, out.width = "100%"}
+signal_extract_plot(
+  data = liveborn_inout_extract,
+  ylab = "Standardized log(Incidence per 100,000)"
+)
+```
+
+##### Cancer of breast
+```{r, echo = FALSE, out.width = "100%"}
+signal_extract_plot(
+  data = cancerbreast_inout_extract,
+  ylab = "Standardized log(Incidence per 100,000)"
+)
+```
+
+##### Meningitis
+```{r, echo = FALSE, out.width = "100%"}
+signal_extract_plot(
+  data = meningitis_inout_extract,
+  ylab = "Standardized log(Incidence per 100,000)"
+)
+```
+
+##### Viral infections
+```{r, echo = FALSE, out.width = "100%"}
+signal_extract_plot(
+  data = viral_inout_extract,
+  ylab = "Standardized log(Incidence per 100,000)"
+)
+```
+
+##### Other infections
+```{r, echo = FALSE, out.width = "100%"}
+signal_extract_plot(
+  data = other_infct_inout_extract,
+  ylab = "Standardized log(Incidence per 100,000)"
+)
+```
+
+##### Encephalitis
+```{r, echo = FALSE, out.width = "100%"}
+signal_extract_plot(
+  data = encephalitis_inout_extract,
+  ylab = "Standardized log(Incidence per 100,000)"
+)
+```
+
+##### Infection of eye
+```{r, echo = FALSE, out.width = "100%"}
+signal_extract_plot(
+  data = eye_infct_inout_extract,
+  ylab = "Standardized log(Incidence per 100,000)"
+)
+```
+
+##### Otitis media
+```{r, echo = FALSE, out.width = "100%"}
+signal_extract_plot(
+  data = otitis_inout_extract,
+  ylab = "Standardized log(Incidence per 100,000)"
+)
+```
+
+##### AMI
+```{r, echo = FALSE, out.width = "100%"}
+signal_extract_plot(
+  data = ami_inout_extract,
+  ylab = "Standardized log(Incidence per 100,000)"
+)
+```
+
+##### Nonspecific chest pain
+```{r, echo = FALSE, out.width = "100%"}
+signal_extract_plot(
+  data = chest_pain_inout_extract,
+  ylab = "Standardized log(Incidence per 100,000)"
+)
+```
+
+##### Other diseases of veins
+```{r, echo = FALSE, out.width = "100%"}
+signal_extract_plot(
+  data = other_veins_inout_extract,
+  ylab = "Standardized log(Incidence per 100,000)"
+)
+```
+
+##### Tonsillitis
+```{r, echo = FALSE, out.width = "100%"}
+signal_extract_plot(
+  data = tonsillitis_inout_extract,
+  ylab = "Standardized log(Incidence per 100,000)"
+)
+```
+
+## Comparison of diseases
+With the time series broken into their global, seasonal, and anomaly + white noise trends, a comparison between the flu and other illnesses can be made. In these plots, we hope to see some type of pattern, such as when the flu is large so is the other illness.
+
+### Global clustering {.tabset .tabset-fade}
+
+#### Inpatient {.tabset .tabset-fade .tabset-pills}
+
+```{r, echo = FALSE, out.width = "200%"}
+corr_in <- data.frame(
+  Disease = c(
+    "Bronchitis", "Upper respiratory infection", "Pneumonia", "Gout",
+    "Live born", "Breast cancer", "Meningitis", "Viral infections",
+    "Other infections", "Encephalitis", "Inflammation; infection of eye",
+    "Otitis media", "Other ear and sense organ disorders", "AMI",
+    "Nonspecific chest pain", "Varicoses veins of lower extremity",
+    "Other diseases of veins and lymphatics", "Tonsillitis"
+  ),
+  Correlation = c(
+    stats::cor(c(flu_in_extract$ssm), c(bronchitis_in_extract$ssm)),
+    stats::cor(c(flu_in_extract$ssm), c(up_resp_in_extract$ssm)),
+    stats::cor(c(flu_in_extract$ssm), c(pneumonia_in_extract$ssm)),
+    stats::cor(c(flu_in_extract$ssm), c(gout_in_extract$ssm)),
+    stats::cor(c(flu_in_extract$ssm), c(liveborn_in_extract$ssm)),
+    stats::cor(c(flu_in_extract$ssm), c(cancerbreast_in_extract$ssm)),
+    stats::cor(c(flu_in_extract$ssm), c(meningitis_in_extract$ssm)),
+    stats::cor(c(flu_in_extract$ssm), c(viral_in_extract$ssm)),
+    stats::cor(c(flu_in_extract$ssm), c(other_infct_in_extract$ssm)),
+    stats::cor(c(flu_in_extract$ssm), c(encephalitis_in_extract$ssm)),
+    stats::cor(c(flu_in_extract$ssm), c(eye_infct_in_extract$ssm)),
+    stats::cor(c(flu_in_extract$ssm), c(otitis_in_extract$ssm)),
+    stats::cor(c(flu_in_extract$ssm), c(other_ear_in_extract$ssm)),
+    stats::cor(c(flu_in_extract$ssm), c(ami_in_extract$ssm)),
+    stats::cor(c(flu_in_extract$ssm), c(chest_pain_in_extract$ssm)),
+    stats::cor(c(flu_in_extract$ssm), c(varicoses_in_extract$ssm)),
+    stats::cor(c(flu_in_extract$ssm), c(other_veins_in_extract$ssm)),
+    stats::cor(c(flu_in_extract$ssm), c(tonsillitis_in_extract$ssm))
+  )
+)
+
+graphics::hist(
+  x = corr_in$Correlation, xlim = c(-1, 1),
+  xlab = "Correlation values", main = "",
+  col = "gray", border = "white"
+)
+
+tab <- knitr::kable(
+  x = corr_in[order(corr_in$Correlation, decreasing = TRUE), ],
+  digits = 4, align = c("l", "r")
+)
+kableExtra::kable_styling(kable_input = tab)
+```
+
+##### Bronchitis
+```{r, echo = FALSE, out.width = "100%"}
+graphics::plot(
+  x = c(flu_in_extract$ssm),
+  y = c(bronchitis_in_extract$ssm),
+  xlab = "Flu", ylab = "Bronchitis",
+  main = "Seasonal trends",
+  type = "p", pch = 16
+)
+abline(h = 0, col = "red", lty = 3)
+```
+
+##### Upper respiratory infections
+```{r, echo = FALSE, out.width = "100%"}
+graphics::plot(
+  x = c(flu_in_extract$ssm),
+  y = c(up_resp_in_extract$ssm),
+  xlab = "Flu", ylab = "Upper respiratory infections",
+  main = "Seasonal trends",
+  type = "p", pch = 16
+)
+abline(h = 0, col = "red", lty = 3)
+```
+
+##### Pneumonia
+```{r, echo = FALSE, out.width = "100%"}
+graphics::plot(
+  x = c(flu_in_extract$ssm),
+  y = c(pneumonia_in_extract$ssm),
+  xlab = "Flu", ylab = "Pneumonia",
+  main = "Seasonal trends",
+  type = "p", pch = 16
+)
+abline(h = 0, col = "red", lty = 3)
+```
+
+##### Gout
+```{r, echo = FALSE, out.width = "100%"}
+graphics::plot(
+  x = c(flu_in_extract$ssm),
+  y = c(gout_in_extract$ssm),
+  xlab = "Flu", ylab = "Gout",
+  main = "Seasonal trends",
+  type = "p", pch = 16
+)
+abline(h = 0, col = "red", lty = 3)
+```
+
+##### Liveborn
+```{r, echo = FALSE, out.width = "100%"}
+graphics::plot(
+  x = c(flu_in_extract$ssm),
+  y = c(liveborn_in_extract$ssm),
+  xlab = "Flu", ylab = "Liveborn",
+  main = "Seasonal trends",
+  type = "p", pch = 16
+)
+abline(h = 0, col = "red", lty = 3)
+```
+
+##### Cancer of breast
+```{r, echo = FALSE, out.width = "100%"}
+graphics::plot(
+  x = c(flu_in_extract$ssm),
+  y = c(cancerbreast_in_extract$ssm),
+  xlab = "Flu", ylab = "Cancer of breast",
+  main = "Seasonal trends",
+  type = "p", pch = 16
+)
+abline(h = 0, col = "red", lty = 3)
+```
+
+##### Meningitis
+```{r, echo = FALSE, out.width = "100%"}
+graphics::plot(
+  x = c(flu_in_extract$ssm),
+  y = c(meningitis_in_extract$ssm),
+  xlab = "Flu", ylab = "Meningitis",
+  main = "Seasonal trends",
+  type = "p", pch = 16
+)
+abline(h = 0, col = "red", lty = 3)
+```
+
+##### Viral infections
+```{r, echo = FALSE, out.width = "100%"}
+graphics::plot(
+  x = c(flu_in_extract$ssm),
+  y = c(viral_in_extract$ssm),
+  xlab = "Flu", ylab = "Viral infections",
+  main = "Seasonal trends",
+  type = "p", pch = 16
+)
+abline(h = 0, col = "red", lty = 3)
+```
+
+##### Other infections
+```{r, echo = FALSE, out.width = "100%"}
+graphics::plot(
+  x = c(flu_in_extract$ssm),
+  y = c(other_infct_in_extract$ssm),
+  xlab = "Flu", ylab = "Other infections",
+  main = "Seasonal trends",
+  type = "p", pch = 16
+)
+abline(h = 0, col = "red", lty = 3)
+```
+
+##### Encephalitis
+```{r, echo = FALSE, out.width = "100%"}
+graphics::plot(
+  x = c(flu_in_extract$ssm),
+  y = c(encephalitis_in_extract$ssm),
+  xlab = "Flu", ylab = "Encephalitis",
+  main = "Seasonal trends",
+  type = "p", pch = 16
+)
+abline(h = 0, col = "red", lty = 3)
+```
+
+##### Infection of eye
+```{r, echo = FALSE, out.width = "100%"}
+graphics::plot(
+  x = c(flu_in_extract$ssm),
+  y = c(eye_infct_in_extract$ssm),
+  xlab = "Flu", ylab = "Infection of eye",
+  main = "Seasonal trends",
+  type = "p", pch = 16
+)
+abline(h = 0, col = "red", lty = 3)
+```
+
+##### Otitis media
+```{r, echo = FALSE, out.width = "100%"}
+graphics::plot(
+  x = c(flu_in_extract$ssm),
+  y = c(otitis_in_extract$ssm),
+  xlab = "Flu", ylab = "Otitis media",
+  main = "Seasonal trends",
+  type = "p", pch = 16
+)
+abline(h = 0, col = "red", lty = 3)
+```
+
+##### AMI
+```{r, echo = FALSE, out.width = "100%"}
+graphics::plot(
+  x = c(flu_in_extract$ssm),
+  y = c(ami_in_extract$ssm),
+  xlab = "Flu", ylab = "AMI",
+  main = "Seasonal trends",
+  type = "p", pch = 16
+)
+abline(h = 0, col = "red", lty = 3)
+```
+
+##### Nonspecific chest pain
+```{r, echo = FALSE, out.width = "100%"}
+graphics::plot(
+  x = c(flu_in_extract$ssm),
+  y = c(chest_pain_in_extract$ssm),
+  xlab = "Flu", ylab = "Nonspecific chest pain",
+  main = "Seasonal trends",
+  type = "p", pch = 16
+)
+abline(h = 0, col = "red", lty = 3)
+```
+
+##### Other diseases of veins
+```{r, echo = FALSE, out.width = "100%"}
+graphics::plot(
+  x = c(flu_in_extract$ssm),
+  y = c(other_veins_in_extract$ssm),
+  xlab = "Flu", ylab = "Other diseases of veins",
+  main = "Seasonal trends",
+  type = "p", pch = 16
+)
+abline(h = 0, col = "red", lty = 3)
+```
+
+##### Tonsillitis
+```{r, echo = FALSE, out.width = "100%"}
+graphics::plot(
+  x = c(flu_in_extract$ssm),
+  y = c(tonsillitis_in_extract$ssm),
+  xlab = "Flu", ylab = "Tonsillitis",
+  main = "Seasonal trends",
+  type = "p", pch = 16
+)
+abline(h = 0, col = "red", lty = 3)
+```
+
+#### Inpatient + Outpatient {.tabset .tabset-fade .tabset-pills}
+
+```{r, echo = FALSE, out.width = "100%"}
+corr_inout <- data.frame(
+  Disease = c(
+    "Bronchitis", "Upper respiratory infection", "Pneumonia", "Gout",
+    "Live born", "Breast cancer", "Meningitis", "Viral infections",
+    "Other infections", "Encephalitis", "Inflammation; infection of eye",
+    "Otitis media", "Other ear and sense organ disorders", "AMI",
+    "Nonspecific chest pain", "Varicoses veins of lower extremity",
+    "Other diseases of veins and lymphatics", "Tonsillitis"
+  ),
+  Correlation = c(
+    stats::cor(c(flu_inout_extract$ssm), c(bronchitis_inout_extract$ssm)),
+    stats::cor(c(flu_inout_extract$ssm), c(up_resp_inout_extract$ssm)),
+    stats::cor(c(flu_inout_extract$ssm), c(pneumonia_inout_extract$ssm)),
+    stats::cor(c(flu_inout_extract$ssm), c(gout_inout_extract$ssm)),
+    stats::cor(c(flu_inout_extract$ssm), c(liveborn_inout_extract$ssm)),
+    stats::cor(c(flu_inout_extract$ssm), c(cancerbreast_inout_extract$ssm)),
+    stats::cor(c(flu_inout_extract$ssm), c(meningitis_inout_extract$ssm)),
+    stats::cor(c(flu_inout_extract$ssm), c(viral_inout_extract$ssm)),
+    stats::cor(c(flu_inout_extract$ssm), c(other_infct_inout_extract$ssm)),
+    stats::cor(c(flu_inout_extract$ssm), c(encephalitis_inout_extract$ssm)),
+    stats::cor(c(flu_inout_extract$ssm), c(eye_infct_inout_extract$ssm)),
+    stats::cor(c(flu_inout_extract$ssm), c(otitis_inout_extract$ssm)),
+    stats::cor(c(flu_inout_extract$ssm), c(other_ear_inout_extract$ssm)),
+    stats::cor(c(flu_inout_extract$ssm), c(ami_inout_extract$ssm)),
+    stats::cor(c(flu_inout_extract$ssm), c(chest_pain_inout_extract$ssm)),
+    stats::cor(c(flu_inout_extract$ssm), c(varicoses_inout_extract$ssm)),
+    stats::cor(c(flu_inout_extract$ssm), c(other_veins_inout_extract$ssm)),
+    stats::cor(c(flu_inout_extract$ssm), c(tonsillitis_inout_extract$ssm))
+  )
+)
+
+graphics::hist(
+  x = corr_inout$Correlation, xlim = c(-1, 1),
+  xlab = "Correlation values", main = "",
+  col = "gray", border = "white"
+)
+
+tab <- knitr::kable(
+  x = corr_inout[order(corr_inout$Correlation, decreasing = TRUE), ],
+  digits = 4, align = c("l", "r")
+)
+kableExtra::kable_styling(kable_input = tab)
+```
+
+##### Bronchitis
+```{r, echo = FALSE, out.width = "100%"}
+graphics::plot(
+  x = c(flu_inout_extract$ssm),
+  y = c(bronchitis_inout_extract$ssm),
+  xlab = "Flu", ylab = "Bronchitis",
+  main = "Seasonal trends",
+  type = "p", pch = 16
+)
+abline(h = 0, col = "red", lty = 3)
+```
+
+##### Upper respiratory infections
+```{r, echo = FALSE, out.width = "100%"}
+graphics::plot(
+  x = c(flu_inout_extract$ssm),
+  y = c(up_resp_inout_extract$ssm),
+  xlab = "Flu", ylab = "Upper respiratory infections",
+  main = "Seasonal trends",
+  type = "p", pch = 16
+)
+abline(h = 0, col = "red", lty = 3)
+```
+
+##### Pneumonia
+```{r, echo = FALSE, out.width = "100%"}
+graphics::plot(
+  x = c(flu_inout_extract$ssm),
+  y = c(pneumonia_inout_extract$ssm),
+  xlab = "Flu", ylab = "Pneumonia",
+  main = "Seasonal trends",
+  type = "p", pch = 16
+)
+abline(h = 0, col = "red", lty = 3)
+```
+
+##### Gout
+```{r, echo = FALSE, out.width = "100%"}
+graphics::plot(
+  x = c(flu_inout_extract$ssm),
+  y = c(gout_inout_extract$ssm),
+  xlab = "Flu", ylab = "Gout",
+  main = "Seasonal trends",
+  type = "p", pch = 16
+)
+abline(h = 0, col = "red", lty = 3)
+```
+
+##### Liveborn
+```{r, echo = FALSE, out.width = "100%"}
+graphics::plot(
+  x = c(flu_inout_extract$ssm),
+  y = c(liveborn_inout_extract$ssm),
+  xlab = "Flu", ylab = "Liveborn",
+  main = "Seasonal trends",
+  type = "p", pch = 16
+)
+abline(h = 0, col = "red", lty = 3)
+```
+
+##### Cancer of breast
+```{r, echo = FALSE, out.width = "100%"}
+graphics::plot(
+  x = c(flu_inout_extract$ssm),
+  y = c(cancerbreast_inout_extract$ssm),
+  xlab = "Flu", ylab = "Cancer of breast",
+  main = "Seasonal trends",
+  type = "p", pch = 16
+)
+abline(h = 0, col = "red", lty = 3)
+```
+
+##### Meningitis
+```{r, echo = FALSE, out.width = "100%"}
+graphics::plot(
+  x = c(flu_inout_extract$ssm),
+  y = c(meningitis_inout_extract$ssm),
+  xlab = "Flu", ylab = "Meningitis",
+  main = "Seasonal trends",
+  type = "p", pch = 16
+)
+abline(h = 0, col = "red", lty = 3)
+```
+
+##### Viral infections
+```{r, echo = FALSE, out.width = "100%"}
+graphics::plot(
+  x = c(flu_inout_extract$ssm),
+  y = c(viral_inout_extract$ssm),
+  xlab = "Flu", ylab = "Viral infections",
+  main = "Seasonal trends",
+  type = "p", pch = 16
+)
+abline(h = 0, col = "red", lty = 3)
+```
+
+##### Other infections
+```{r, echo = FALSE, out.width = "100%"}
+graphics::plot(
+  x = c(flu_inout_extract$ssm),
+  y = c(other_infct_inout_extract$ssm),
+  xlab = "Flu", ylab = "Other infections",
+  main = "Seasonal trends",
+  type = "p", pch = 16
+)
+abline(h = 0, col = "red", lty = 3)
+```
+
+##### Encephalitis
+```{r, echo = FALSE, out.width = "100%"}
+graphics::plot(
+  x = c(flu_inout_extract$ssm),
+  y = c(encephalitis_inout_extract$ssm),
+  xlab = "Flu", ylab = "Encephalitis",
+  main = "Seasonal trends",
+  type = "p", pch = 16
+)
+abline(h = 0, col = "red", lty = 3)
+```
+
+##### Infection of eye
+```{r, echo = FALSE, out.width = "100%"}
+graphics::plot(
+  x = c(flu_inout_extract$ssm),
+  y = c(eye_infct_inout_extract$ssm),
+  xlab = "Flu", ylab = "Infection of eye",
+  main = "Seasonal trends",
+  type = "p", pch = 16
+)
+abline(h = 0, col = "red", lty = 3)
+```
+
+##### Otitis media
+```{r, echo = FALSE, out.width = "100%"}
+graphics::plot(
+  x = c(flu_inout_extract$ssm),
+  y = c(otitis_inout_extract$ssm),
+  xlab = "Flu", ylab = "Otitis media",
+  main = "Seasonal trends",
+  type = "p", pch = 16
+)
+abline(h = 0, col = "red", lty = 3)
+```
+
+##### AMI
+```{r, echo = FALSE, out.width = "100%"}
+graphics::plot(
+  x = c(flu_inout_extract$ssm),
+  y = c(ami_inout_extract$ssm),
+  xlab = "Flu", ylab = "AMI",
+  main = "Seasonal trends",
+  type = "p", pch = 16
+)
+abline(h = 0, col = "red", lty = 3)
+```
+
+##### Nonspecific chest pain
+```{r, echo = FALSE, out.width = "100%"}
+graphics::plot(
+  x = c(flu_inout_extract$ssm),
+  y = c(chest_pain_inout_extract$ssm),
+  xlab = "Flu", ylab = "Nonspecific chest pain",
+  main = "Seasonal trends",
+  type = "p", pch = 16
+)
+abline(h = 0, col = "red", lty = 3)
+```
+
+##### Other diseases of veins
+```{r, echo = FALSE, out.width = "100%"}
+graphics::plot(
+  x = c(flu_inout_extract$ssm),
+  y = c(other_veins_inout_extract$ssm),
+  xlab = "Flu", ylab = "Other diseases of veins",
+  main = "Seasonal trends",
+  type = "p", pch = 16
+)
+abline(h = 0, col = "red", lty = 3)
+```
+
+##### Tonsillitis
+```{r, echo = FALSE, out.width = "100%"}
+graphics::plot(
+  x = c(flu_inout_extract$ssm),
+  y = c(tonsillitis_inout_extract$ssm),
+  xlab = "Flu", ylab = "Tonsillitis",
+  main = "Seasonal trends",
+  type = "p", pch = 16
+)
+abline(h = 0, col = "red", lty = 3)
+```
+
+### Local clustering {.tabset .tabset-fade}
+
+#### Inpatient {.tabset .tabset-fade .tabset-pills}
+
+```{r, echo = FALSE, out.width = "200%"}
+corr_in <- data.frame(
+  Disease = c(
+    "Bronchitis", "Upper respiratory infection", "Pneumonia", "Gout",
+    "Live born", "Breast cancer", "Meningitis", "Viral infections",
+    "Other infections", "Encephalitis", "Inflammation; infection of eye",
+    "Otitis media", "Other ear and sense organ disorders", "AMI",
+    "Nonspecific chest pain", "Varicoses veins of lower extremity",
+    "Other diseases of veins and lymphatics", "Tonsillitis"
+  ),
+  Correlation = c(
+    stats::cor(c(flu_in_extract$asm), c(bronchitis_in_extract$asm)),
+    stats::cor(c(flu_in_extract$asm), c(up_resp_in_extract$asm)),
+    stats::cor(c(flu_in_extract$asm), c(pneumonia_in_extract$asm)),
+    stats::cor(c(flu_in_extract$asm), c(gout_in_extract$asm)),
+    stats::cor(c(flu_in_extract$asm), c(liveborn_in_extract$asm)),
+    stats::cor(c(flu_in_extract$asm), c(cancerbreast_in_extract$asm)),
+    stats::cor(c(flu_in_extract$asm), c(meningitis_in_extract$asm)),
+    stats::cor(c(flu_in_extract$asm), c(viral_in_extract$asm)),
+    stats::cor(c(flu_in_extract$asm), c(other_infct_in_extract$asm)),
+    stats::cor(c(flu_in_extract$asm), c(encephalitis_in_extract$asm)),
+    stats::cor(c(flu_in_extract$asm), c(eye_infct_in_extract$asm)),
+    stats::cor(c(flu_in_extract$asm), c(otitis_in_extract$asm)),
+    stats::cor(c(flu_in_extract$asm), c(other_ear_in_extract$asm)),
+    stats::cor(c(flu_in_extract$asm), c(ami_in_extract$asm)),
+    stats::cor(c(flu_in_extract$asm), c(chest_pain_in_extract$asm)),
+    stats::cor(c(flu_in_extract$asm), c(varicoses_in_extract$asm)),
+    stats::cor(c(flu_in_extract$asm), c(other_veins_in_extract$asm)),
+    stats::cor(c(flu_in_extract$asm), c(tonsillitis_in_extract$asm))
+  )
+)
+
+graphics::hist(
+  x = corr_in$Correlation, xlim = c(-1, 1),
+  xlab = "Correlation values", main = "",
+  col = "gray", border = "white"
+)
+
+tab <- knitr::kable(
+  x = corr_in[order(corr_in$Correlation, decreasing = TRUE), ],
+  digits = 4, align = c("l", "r")
+)
+kableExtra::kable_styling(kable_input = tab)
+```
+
+##### Bronchitis
+```{r, echo = FALSE, out.width = "100%"}
+graphics::plot(
+  x = c(flu_in_extract$asm),
+  y = c(bronchitis_in_extract$asm),
+  xlab = "Flu", ylab = "Bronchitis",
+  main = "Anomaly + error trends",
+  type = "p", pch = 16
+)
+abline(h = 0, col = "red", lty = 3)
+```
+
+##### Upper respiratory infections
+```{r, echo = FALSE, out.width = "100%"}
+graphics::plot(
+  x = c(flu_in_extract$asm),
+  y = c(up_resp_in_extract$asm),
+  xlab = "Flu", ylab = "Upper respiratory infections",
+  main = "Anomaly + error trends",
+  type = "p", pch = 16
+)
+abline(h = 0, col = "red", lty = 3)
+```
+
+##### Pneumonia
+```{r, echo = FALSE, out.width = "100%"}
+graphics::plot(
+  x = c(flu_in_extract$asm),
+  y = c(pneumonia_in_extract$asm),
+  xlab = "Flu", ylab = "Pneumonia",
+  main = "Anomaly + error trends",
+  type = "p", pch = 16
+)
+abline(h = 0, col = "red", lty = 3)
+```
+
+##### Gout
+```{r, echo = FALSE, out.width = "100%"}
+graphics::plot(
+  x = c(flu_in_extract$asm),
+  y = c(gout_in_extract$asm),
+  xlab = "Flu", ylab = "Gout",
+  main = "Anomaly + error trends",
+  type = "p", pch = 16
+)
+abline(h = 0, col = "red", lty = 3)
+```
+
+##### Liveborn
+```{r, echo = FALSE, out.width = "100%"}
+graphics::plot(
+  x = c(flu_in_extract$asm),
+  y = c(liveborn_in_extract$asm),
+  xlab = "Flu", ylab = "Liveborn",
+  main = "Anomaly + error trends",
+  type = "p", pch = 16
+)
+abline(h = 0, col = "red", lty = 3)
+```
+
+##### Cancer of breast
+```{r, echo = FALSE, out.width = "100%"}
+graphics::plot(
+  x = c(flu_in_extract$asm),
+  y = c(cancerbreast_in_extract$asm),
+  xlab = "Flu", ylab = "Cancer of breast",
+  main = "Anomaly + error trends",
+  type = "p", pch = 16
+)
+abline(h = 0, col = "red", lty = 3)
+```
+
+##### Meningitis
+```{r, echo = FALSE, out.width = "100%"}
+graphics::plot(
+  x = c(flu_in_extract$asm),
+  y = c(meningitis_in_extract$asm),
+  xlab = "Flu", ylab = "Meningitis",
+  main = "Anomaly + error trends",
+  type = "p", pch = 16
+)
+abline(h = 0, col = "red", lty = 3)
+```
+
+##### Viral infections
+```{r, echo = FALSE, out.width = "100%"}
+graphics::plot(
+  x = c(flu_in_extract$asm),
+  y = c(viral_in_extract$asm),
+  xlab = "Flu", ylab = "Viral infections",
+  main = "Anomaly + error trends",
+  type = "p", pch = 16
+)
+abline(h = 0, col = "red", lty = 3)
+```
+
+##### Other infections
+```{r, echo = FALSE, out.width = "100%"}
+graphics::plot(
+  x = c(flu_in_extract$asm),
+  y = c(other_infct_in_extract$asm),
+  xlab = "Flu", ylab = "Other infections",
+  main = "Seasonal trends",
+  type = "p", pch = 16
+)
+abline(h = 0, col = "red", lty = 3)
+```
+
+##### Encephalitis
+```{r, echo = FALSE, out.width = "100%"}
+graphics::plot(
+  x = c(flu_in_extract$asm),
+  y = c(encephalitis_in_extract$asm),
+  xlab = "Flu", ylab = "Encephalitis",
+  main = "Anomaly + error trends",
+  type = "p", pch = 16
+)
+abline(h = 0, col = "red", lty = 3)
+```
+
+##### Infection of eye
+```{r, echo = FALSE, out.width = "100%"}
+graphics::plot(
+  x = c(flu_in_extract$asm),
+  y = c(eye_infct_in_extract$asm),
+  xlab = "Flu", ylab = "Infection of eye",
+  main = "Anomaly + error trends",
+  type = "p", pch = 16
+)
+abline(h = 0, col = "red", lty = 3)
+```
+
+##### Otitis media
+```{r, echo = FALSE, out.width = "100%"}
+graphics::plot(
+  x = c(flu_in_extract$asm),
+  y = c(otitis_in_extract$asm),
+  xlab = "Flu", ylab = "Otitis media",
+  main = "Anomaly + error trends",
+  type = "p", pch = 16
+)
+abline(h = 0, col = "red", lty = 3)
+```
+
+##### AMI
+```{r, echo = FALSE, out.width = "100%"}
+graphics::plot(
+  x = c(flu_in_extract$asm),
+  y = c(ami_in_extract$asm),
+  xlab = "Flu", ylab = "AMI",
+  main = "Anomaly + error trends",
+  type = "p", pch = 16
+)
+abline(h = 0, col = "red", lty = 3)
+```
+
+##### Nonspecific chest pain
+```{r, echo = FALSE, out.width = "100%"}
+graphics::plot(
+  x = c(flu_in_extract$asm),
+  y = c(chest_pain_in_extract$asm),
+  xlab = "Flu", ylab = "Nonspecific chest pain",
+  main = "Anomaly + error trends",
+  type = "p", pch = 16
+)
+abline(h = 0, col = "red", lty = 3)
+```
+
+##### Other diseases of veins
+```{r, echo = FALSE, out.width = "100%"}
+graphics::plot(
+  x = c(flu_in_extract$asm),
+  y = c(other_veins_in_extract$asm),
+  xlab = "Flu", ylab = "Other diseases of veins",
+  main = "Anomaly + error trends",
+  type = "p", pch = 16
+)
+abline(h = 0, col = "red", lty = 3)
+```
+
+##### Tonsillitis
+```{r, echo = FALSE, out.width = "100%"}
+graphics::plot(
+  x = c(flu_in_extract$asm),
+  y = c(tonsillitis_in_extract$asm),
+  xlab = "Flu", ylab = "Tonsillitis",
+  main = "Anomaly + error trends",
+  type = "p", pch = 16
+)
+abline(h = 0, col = "red", lty = 3)
+```
+
+#### Inpatient + Outpatient {.tabset .tabset-fade .tabset-pills}
+
+```{r, echo = FALSE, out.width = "100%"}
+corr_inout <- data.frame(
+  Disease = c(
+    "Bronchitis", "Upper respiratory infection", "Pneumonia", "Gout",
+    "Live born", "Breast cancer", "Meningitis", "Viral infections",
+    "Other infections", "Encephalitis", "Inflammation; infection of eye",
+    "Otitis media", "Other ear and sense organ disorders", "AMI",
+    "Nonspecific chest pain", "Varicoses veins of lower extremity",
+    "Other diseases of veins and lymphatics", "Tonsillitis"
+  ),
+  Correlation = c(
+    stats::cor(c(flu_inout_extract$asm), c(bronchitis_inout_extract$asm)),
+    stats::cor(c(flu_inout_extract$asm), c(up_resp_inout_extract$asm)),
+    stats::cor(c(flu_inout_extract$asm), c(pneumonia_inout_extract$asm)),
+    stats::cor(c(flu_inout_extract$asm), c(gout_inout_extract$asm)),
+    stats::cor(c(flu_inout_extract$asm), c(liveborn_inout_extract$asm)),
+    stats::cor(c(flu_inout_extract$asm), c(cancerbreast_inout_extract$asm)),
+    stats::cor(c(flu_inout_extract$asm), c(meningitis_inout_extract$asm)),
+    stats::cor(c(flu_inout_extract$asm), c(viral_inout_extract$asm)),
+    stats::cor(c(flu_inout_extract$asm), c(other_infct_inout_extract$asm)),
+    stats::cor(c(flu_inout_extract$asm), c(encephalitis_inout_extract$asm)),
+    stats::cor(c(flu_inout_extract$asm), c(eye_infct_inout_extract$asm)),
+    stats::cor(c(flu_inout_extract$asm), c(otitis_inout_extract$asm)),
+    stats::cor(c(flu_inout_extract$asm), c(other_ear_inout_extract$asm)),
+    stats::cor(c(flu_inout_extract$asm), c(ami_inout_extract$asm)),
+    stats::cor(c(flu_inout_extract$asm), c(chest_pain_inout_extract$asm)),
+    stats::cor(c(flu_inout_extract$asm), c(varicoses_inout_extract$asm)),
+    stats::cor(c(flu_inout_extract$asm), c(other_veins_inout_extract$asm)),
+    stats::cor(c(flu_inout_extract$asm), c(tonsillitis_inout_extract$asm))
+  )
+)
+
+graphics::hist(
+  x = corr_inout$Correlation, xlim = c(-1, 1),
+  xlab = "Correlation values", main = "",
+  col = "gray", border = "white"
+)
+
+tab <- knitr::kable(
+  x = corr_inout[order(corr_inout$Correlation, decreasing = TRUE), ],
+  digits = 4, align = c("l", "r")
+)
+kableExtra::kable_styling(kable_input = tab)
+```
+
+##### Bronchitis
+```{r, echo = FALSE, out.width = "100%"}
+graphics::plot(
+  x = c(flu_inout_extract$asm),
+  y = c(bronchitis_inout_extract$asm),
+  xlab = "Flu", ylab = "Bronchitis",
+  main = "Anomaly + error trends",
+  type = "p", pch = 16
+)
+abline(h = 0, col = "red", lty = 3)
+```
+
+##### Upper respiratory infections
+```{r, echo = FALSE, out.width = "100%"}
+graphics::plot(
+  x = c(flu_inout_extract$asm),
+  y = c(up_resp_inout_extract$asm),
+  xlab = "Flu", ylab = "Upper respiratory infections",
+  main = "Anomaly + error trends",
+  type = "p", pch = 16
+)
+abline(h = 0, col = "red", lty = 3)
+```
+
+##### Pneumonia
+```{r, echo = FALSE, out.width = "100%"}
+graphics::plot(
+  x = c(flu_inout_extract$asm),
+  y = c(pneumonia_inout_extract$asm),
+  xlab = "Flu", ylab = "Pneumonia",
+  main = "Anomaly + error trends",
+  type = "p", pch = 16
+)
+abline(h = 0, col = "red", lty = 3)
+```
+
+##### Gout
+```{r, echo = FALSE, out.width = "100%"}
+graphics::plot(
+  x = c(flu_inout_extract$asm),
+  y = c(gout_inout_extract$asm),
+  xlab = "Flu", ylab = "Gout",
+  main = "Anomaly + error trends",
+  type = "p", pch = 16
+)
+abline(h = 0, col = "red", lty = 3)
+```
+
+##### Liveborn
+```{r, echo = FALSE, out.width = "100%"}
+graphics::plot(
+  x = c(flu_inout_extract$asm),
+  y = c(liveborn_inout_extract$asm),
+  xlab = "Flu", ylab = "Liveborn",
+  main = "Anomaly + error trends",
+  type = "p", pch = 16
+)
+abline(h = 0, col = "red", lty = 3)
+```
+
+##### Cancer of breast
+```{r, echo = FALSE, out.width = "100%"}
+graphics::plot(
+  x = c(flu_inout_extract$asm),
+  y = c(cancerbreast_inout_extract$asm),
+  xlab = "Flu", ylab = "Cancer of breast",
+  main = "Anomaly + error trends",
+  type = "p", pch = 16
+)
+abline(h = 0, col = "red", lty = 3)
+```
+
+##### Meningitis
+```{r, echo = FALSE, out.width = "100%"}
+graphics::plot(
+  x = c(flu_inout_extract$asm),
+  y = c(meningitis_inout_extract$asm),
+  xlab = "Flu", ylab = "Meningitis",
+  main = "Anomaly + error trends",
+  type = "p", pch = 16
+)
+abline(h = 0, col = "red", lty = 3)
+```
+
+##### Viral infections
+```{r, echo = FALSE, out.width = "100%"}
+graphics::plot(
+  x = c(flu_inout_extract$asm),
+  y = c(viral_inout_extract$asm),
+  xlab = "Flu", ylab = "Viral infections",
+  main = "Anomaly + error trends",
+  type = "p", pch = 16
+)
+abline(h = 0, col = "red", lty = 3)
+```
+
+##### Other infections
+```{r, echo = FALSE, out.width = "100%"}
+graphics::plot(
+  x = c(flu_inout_extract$asm),
+  y = c(other_infct_inout_extract$asm),
+  xlab = "Flu", ylab = "Other infections",
+  main = "Seasonal trends",
+  type = "p", pch = 16
+)
+abline(h = 0, col = "red", lty = 3)
+```
+
+##### Encephalitis
+```{r, echo = FALSE, out.width = "100%"}
+graphics::plot(
+  x = c(flu_inout_extract$asm),
+  y = c(encephalitis_inout_extract$asm),
+  xlab = "Flu", ylab = "Encephalitis",
+  main = "Anomaly + error trends",
+  type = "p", pch = 16
+)
+abline(h = 0, col = "red", lty = 3)
+```
+
+##### Infection of eye
+```{r, echo = FALSE, out.width = "100%"}
+graphics::plot(
+  x = c(flu_inout_extract$asm),
+  y = c(eye_infct_inout_extract$asm),
+  xlab = "Flu", ylab = "Infection of eye",
+  main = "Anomaly + error trends",
+  type = "p", pch = 16
+)
+abline(h = 0, col = "red", lty = 3)
+```
+
+##### Otitis media
+```{r, echo = FALSE, out.width = "100%"}
+graphics::plot(
+  x = c(flu_inout_extract$asm),
+  y = c(otitis_inout_extract$asm),
+  xlab = "Flu", ylab = "Otitis media",
+  main = "Anomaly + error trends",
+  type = "p", pch = 16
+)
+abline(h = 0, col = "red", lty = 3)
+```
+
+##### AMI
+```{r, echo = FALSE, out.width = "100%"}
+graphics::plot(
+  x = c(flu_inout_extract$asm),
+  y = c(ami_inout_extract$asm),
+  xlab = "Flu", ylab = "AMI",
+  main = "Anomaly + error trends",
+  type = "p", pch = 16
+)
+abline(h = 0, col = "red", lty = 3)
+```
+
+##### Nonspecific chest pain
+```{r, echo = FALSE, out.width = "100%"}
+graphics::plot(
+  x = c(flu_inout_extract$asm),
+  y = c(chest_pain_inout_extract$asm),
+  xlab = "Flu", ylab = "Nonspecific chest pain",
+  main = "Anomaly + error trends",
+  type = "p", pch = 16
+)
+abline(h = 0, col = "red", lty = 3)
+```
+
+##### Other diseases of veins
+```{r, echo = FALSE, out.width = "100%"}
+graphics::plot(
+  x = c(flu_inout_extract$asm),
+  y = c(other_veins_inout_extract$asm),
+  xlab = "Flu", ylab = "Other diseases of veins",
+  main = "Anomaly + error trends",
+  type = "p", pch = 16
+)
+abline(h = 0, col = "red", lty = 3)
+```
+
+##### Tonsillitis
+```{r, echo = FALSE, out.width = "100%"}
+graphics::plot(
+  x = c(flu_inout_extract$asm),
+  y = c(tonsillitis_inout_extract$asm),
+  xlab = "Flu", ylab = "Tonsillitis",
+  main = "Anomaly + error trends",
+  type = "p", pch = 16
+)
+abline(h = 0, col = "red", lty = 3)
+```

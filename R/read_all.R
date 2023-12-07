@@ -11,7 +11,7 @@ read_all <- function(cd = getwd()) {
 
   ## CCS labels ####
   ccs_labels <- utils::read.csv(
-    file = "./data/ccs_series/ccs_labels.csv",
+    file = "./data/ccs-series/ccs_labels.csv",
     header = TRUE,
     colClasses = c("numeric", "character"),
     stringsAsFactors = FALSE
@@ -19,7 +19,7 @@ read_all <- function(cd = getwd()) {
 
   ## Monthly CCS counts ####
   ccs_monthly <- utils::read.csv(
-    file = "./data/ccs_series/monthly_ccae_mdcr.csv",
+    file = "./data/ccs-series/monthly_ccae_mdcr.csv",
     header = TRUE,
     colClasses = rep("numeric", 4),
     stringsAsFactors = FALSE
@@ -27,7 +27,7 @@ read_all <- function(cd = getwd()) {
 
   ## Daily enrollment ####
   enroll_daily <- utils::read.csv(
-    file = "./data/enrollment_series/daily_enroll_all.csv",
+    file = "./data/enrollment-series/daily_enroll_all.csv",
     header = TRUE,
     colClasses = c("character", "numeric", "character"),
     stringsAsFactors = FALSE
@@ -51,7 +51,7 @@ read_all <- function(cd = getwd()) {
 
   ## Monthly enrollment ####
   enroll_monthly <- utils::read.csv(
-    file = "./data/enrollment_series/monthly_enroll_ccae_mdcr.csv",
+    file = "./data/enrollment-series/monthly_enroll_ccae_mdcr.csv",
     header = TRUE,
     colClasses = rep("numeric", 3),
     stringsAsFactors = FALSE

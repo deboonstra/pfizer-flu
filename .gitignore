@@ -18,5 +18,8 @@ explore
 # Outputs
 **/*.html
 
+# Tables
+**/*.pdf
+
 # Resources
 resources

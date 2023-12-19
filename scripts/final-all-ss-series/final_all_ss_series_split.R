@@ -147,7 +147,7 @@ saveRDS(
 )
 if (length(all_models_issue) > 0) {
   saveRDS(
-    object = all_models,
+    object = all_models_issue,
     file = "./outputs/final-all-ss-series/final_all_models_issue.rds"
   )
 }

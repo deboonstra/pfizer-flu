@@ -120,11 +120,11 @@ if (sum(convergence) == 0) {
 }
 
 ## Excluding problematic series ####
-icd9_ts <- icd9_ts[-ww]
-all_models <- all_models[-ww]
-
 icd9_ts_issue <- icd9_ts[ww]
 all_models_issue <- all_models[ww]
+
+icd9_ts <- icd9_ts[-ww]
+all_models <- all_models[-ww]
 
 # Exporting results ####
 

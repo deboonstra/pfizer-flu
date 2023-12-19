@@ -8,6 +8,7 @@ data/enrollment-series/*
 !data/enrollment-series/README.md
 data/incidence-series/*
 !data/incidence-series/README.md
+data/final-incidence-series/*
 
 # Figures
 figures

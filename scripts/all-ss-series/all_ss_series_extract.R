@@ -12,10 +12,7 @@ sapply(R, source, .GlobalEnv)
 icd9_ts <- readRDS(file = "./outputs/all-ss-series/all_series.rds")
 
 ## Models ###
-all_models1 <- readRDS(file = "./outputs/all-ss-series/all_models1.rds")
-all_models2 <- readRDS(file = "./outputs/all-ss-series/all_models2.rds")
-all_models3 <- readRDS(file = "./outputs/all-ss-series/all_models3.rds")
-all_models <- c(all_models1, all_models2, all_models3)
+all_models <- readRDS(file = "./outputs/all-ss-series/all_models.rds")
 
 # Extraction ####
 all_extract <- lapply(

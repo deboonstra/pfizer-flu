@@ -37,12 +37,26 @@ icd_ts <- lapply(
     x <- subset(x = x, select = incidence)
     x <- stats::ts(
       data = x,
-      start = c(temp$year[1], temp$month[1]), frequency = 12
+      start = c(2001, 1), frequency = 12
     )
     return(x)
   }
 )
 names(icd_ts) <- paste0("ccs", names(icd_ts))
+original_len <- length(icd_ts)
+
+### Eliminating disease with missing data ####
+### There are certain diseases that do NOT have data for every month in the
+### series. This is mostly likely due to some months having a zero incidence
+### during that month. Therefore, our analyatical method is a complete case
+### analysis.
+verify_len <- length(rep(x = 2011:2019, times = 12))
+w_diseases <- which(x = sapply(icd_ts, length) == verify_len)
+valid_diseases <- names(w_diseases)
+if (length(valid_diseases) < original_len) {
+  bad_diseases <- names(icd_ts)[-w_diseases]
+}
+icd_ts <- icd_ts[valid_diseases]
 
 # Signal extract ####
 
@@ -149,5 +163,13 @@ if (sum(convergence) > 0) {
   saveRDS(
     object = all_models_issue,
     file = "./outputs/crossover-ss-series/crossover_all_models_issue.rds"
+  )
+}
+
+## Saving names of diseases with missing data ####
+if (length(valid_diseases) < original_len) {
+  saveRDS(
+    object = bad_diseases,
+    file = "./outputs/crossover-ss-series/crossover_bad_diseases.rds"
   )
 }

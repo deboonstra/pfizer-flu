@@ -5,7 +5,8 @@
 # combined ICD-9-CM data.
 
 # The difference between this analysis and the all-ss-series analysis is the
-# inclusion of additional years of data. We now have data until 2015.
+# inclusion of additional years of data. We now have data until Sept. 2015
+# when ICD method changed from ICD-9 to ICD-10.
 
 # Importing libraries and functions ####
 R <- list.files(path = "./R", pattern = "*.R", full.names = TRUE)
@@ -36,16 +37,30 @@ icd9_ts <- split(
 icd9_ts <- lapply(
   X = icd9_ts,
   FUN = function(x) {
-    x <- x[order(x$year, x$month), ]
+    x <- temp <- x[order(x$year, x$month), ]
     x <- subset(x = x, select = incidence)
     x <- stats::ts(
       data = x,
-      start = 2003, end = 2015, frequency = 12
+      start = c(2003, 1), frequency = 12
     )
     return(x)
   }
 )
 names(icd9_ts) <- paste0("ccs", names(icd9_ts))
+original_len <- length(icd9_ts)
+
+### Eliminating disease with missing data ####
+### There are certain diseases that do NOT have data for every month in the
+### series. This is mostly likely due to some months having a zero incidence
+### during that month. Therefore, our analyatical method is a complete case
+### analysis.
+verify_len <- length(rep(x = 2003:2015, times = c(rep(12, 12), 9)))
+w_diseases <- which(x = sapply(icd9_ts, length) == verify_len)
+valid_diseases <- names(w_diseases)
+if (length(valid_diseases) < original_len) {
+  bad_diseases <- names(icd9_ts)[-w_diseases]
+}
+icd9_ts <- icd9_ts[valid_diseases]
 
 # Signal extract ####
 
@@ -120,11 +135,13 @@ if (sum(convergence) == 0) {
 }
 
 ## Excluding problematic series ####
-icd9_ts_issue <- icd9_ts[ww]
-all_models_issue <- all_models[ww]
+if (sum(convergence) > 0) {
+  icd_ts_issue <- icd_ts[ww]
+  all_models_issue <- all_models[ww]
 
-icd9_ts <- icd9_ts[-ww]
-all_models <- all_models[-ww]
+  icd_ts <- icd_ts[-ww]
+  all_models <- all_models[-ww]
+}
 
 # Exporting results ####
 
@@ -133,7 +150,7 @@ saveRDS(
   object = icd9_ts,
   file = "./outputs/final-all-ss-series/final_all_series.rds"
 )
-if (length(icd9_ts_issue) > 0) {
+if (sum(convergence) > 0) {
   saveRDS(
     object = icd9_ts_issue,
     file = "./outputs/final-all-ss-series/final_all_series_issue.rds"
@@ -145,9 +162,17 @@ saveRDS(
   object = all_models,
   file = "./outputs/final-all-ss-series/final_all_models.rds"
 )
-if (length(all_models_issue) > 0) {
+if (sum(convergence) > 0) {
   saveRDS(
     object = all_models_issue,
     file = "./outputs/final-all-ss-series/final_all_models_issue.rds"
+  )
+}
+
+## Saving names of diseases with missing data ####
+if (length(valid_diseases) < original_len) {
+  saveRDS(
+    object = bad_diseases,
+    file = "./outputs/final-all-ss-series/final_all_bad_diseases.rds"
   )
 }

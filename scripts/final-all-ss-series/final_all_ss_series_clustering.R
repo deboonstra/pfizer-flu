@@ -1,9 +1,10 @@
 # The function of this script file is perform global and local clustering. The
 # threshold for global clustering will be set to +0.6 and threshold for local
-# clustering will be set at +0.3. The series that achieve both of this
-# thresholds will move onto the examination of causation. This clustering
-# algorithm will only be applied to the inpatient and outpatient combined data
-# at the current moment (2023-11-28).
+# clustering will be set at +0.2. The series that achieve both of this
+# thresholds will move onto the examination of causation.
+
+# The local clustering threshold was decreases from the original value of +0.3
+# due to three important disease being close to +0.3 but less than +0.3.
 
 # Importing libraries and functions ####
 R <- list.files(path = "./R", pattern = "*.R", full.names = TRUE)
@@ -36,7 +37,7 @@ row.names(ccs_labels) <- NULL
 
 ## Setting thresholds ####
 ssm_threshold <- 0.6 # global
-asm_threshold <- 0.3 # local
+asm_threshold <- 0.2 # local
 
 ## Creating matrix of correlation to evaluate ####
 
@@ -81,6 +82,6 @@ corr_asm <- subset(
 
 # Exporting ####
 save(
-  corr_all, corr_ssm, corr_asm,
+  corr_all, corr_ssm, corr_asm, ssm_threshold, asm_threshold,
   file = "./outputs/final-all-ss-series/clustering.RData"
 )

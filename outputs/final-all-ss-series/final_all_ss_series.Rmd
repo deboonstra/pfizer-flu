@@ -26,8 +26,9 @@ load("./outputs/final-all-ss-series/clustering.RData")
 change <- readRDS(
   file = "./outputs/final-all-ss-series/incidence_change.rds"
 )
-ssm_threshold <- 0.6
-asm_threshold <- 0.3
+bad_diseases <- readRDS(
+  file = "./outputs/final-all-ss-series/final_all_bad_diseases.rds"
+)
 ```
 
 # Purpose
@@ -35,10 +36,48 @@ Identify diseases that have the same seasonality as influenza, which will allow 
 
 # Results
 
-An analytical approach was devised to estimate the change in incidence for diseases that are seasonally related to influenza. The approach is outlined as we go through this document. The results on this analysis is based on records from 2003 through 2015 based on the ICD-9-CM coding system and included all inpatient and outpatient records.
+An analytical approach was devised to estimate the change in incidence for diseases that are seasonally related to influenza. The approach is outlined as we go through this document. The results on this analysis is based on records from Jan. 2003 through Sept. 2015 based on the ICD-9-CM coding system and included all inpatient and outpatient records. Prior to splitting the series into their trend, seasonal, and local components, any diseases that did **NOT** have a incidence recorded for every month during the time period of interest were excluded for this analysis. Therefore, we are performing a complete case analysis.
+
+## Excluded diseases
+```{r}
+## Importing CCS names ####
+ccs_labels <- utils::read.csv(file = "./data/ccs-series/ccs_labels.csv")
+
+### Reordering CCS names ####
+### to match the order of the all_extract object
+ccs_no <- sapply(
+  X = names(all_extract),
+  FUN = function(x) {
+    as.integer(substr(x = x, start = 4, stop = nchar(x)))
+  }
+)
+bad_no <- sapply(
+  X = bad_diseases,
+  FUN = function(x) {
+    as.integer(substr(x = x, start = 4, stop = nchar(x)))
+  }
+)
+ccs_labels <- subset(
+  x = ccs_labels,
+  subset = !(ccs_code %in% ccs_no)
+)
+ccs_labels <- ccs_labels[order(ccs_labels$ccs_code), ]
+row.names(ccs_labels) <- NULL
+ccs_labels$reason <- ifelse(
+  test = ccs_labels$ccs_code %in% bad_no,
+  yes = "Months with zero incidences",
+  no = "No data at all"
+)
+tab <- knitr::kable(
+  x = ccs_labels,
+  align = c("r", "l", "l"),
+  col.names = c("CCS", "Disease", "Reason for exclusion")
+)
+kableExtra::kable_styling(kable_input = tab)
+```
 
 ## Splitting of series 
-First, all diseases had their observed incidence series extracted into trend, seasonal, and anomaly + error components (i.e., state-space modeling) based on Kalman filtering and smoothing. This extraction of series borrowed from the work of fourth edition of Shumway and Stoffer's *Time Series Analysis and Its Applications With R Examples* and Tang and Cavanaugh (2015). The trend component was modeled with a random walk process, while it was assumed the seasonal component is expected to sum to zero over a complete period or 12 months.
+First, all diseases had their observed incidence series extracted into trend, seasonal, and local components (i.e., state-space modeling) based on Kalman filtering and smoothing. This extraction of series borrowed from the work of fourth edition of Shumway and Stoffer's *Time Series Analysis and Its Applications With R Examples* and Tang and Cavanaugh (2015). The trend component was modeled with a random walk process, while it was assumed the seasonal component is expected to sum to zero over a complete period or 12 months.
 
 ### Influenza
 ```{r}
@@ -49,67 +88,11 @@ signal_extract_plot(
 )
 ```
 
-### Convergence issues {.tabset .tabset-fade}
-In this analysis, the diseases below had convergence issues that did not allow for the extraction of latent components. The reason for the convergence issue is listed under the *Issue* tab. 
-```{r}
-all_series_issue <- readRDS(
-  file = "./outputs/final-all-ss-series/final_all_series_issue.rds"
-)
-all_models_issue <- readRDS(
-  file = "./outputs/final-all-ss-series/final_all_models_issue.rds"
-)
-```
-
-#### Diseases
-```{r}
-## Importing CCS names ####
-ccs_labels <- utils::read.csv(file = "./data/ccs-series/ccs_labels.csv")
-
-### Reordering CCS names ####
-### to match the order of the all_extract object
-ccs_no <- sapply(
-  X = names(all_models_issue),
-  FUN = function(x) {
-    as.integer(substr(x = x, start = 4, stop = nchar(x)))
-  }
-)
-ccs_labels <- subset(
-  x = ccs_labels,
-  subset = ccs_code %in% ccs_no
-)
-ccs_labels <- ccs_labels[order(ccs_labels$ccs_code), ]
-row.names(ccs_labels) <- NULL
-tab <- knitr::kable(
-  x = ccs_labels,
-  align = c("r", "l"),
-  col.names = c("CCS", "Disease")
-)
-kableExtra::kable_styling(kable_input = tab)
-```
-
-#### Issues
-```{r}
-prob_info <- data.frame(
-  ccs = names(all_models_issue),
-  issue = unname(sapply(X = all_models_issue, function(x) x))
-)
-prob_info$ccs <- gsub("ccs", "CCS: ", prob_info$ccs)
-prob_info$issue <- gsub("\n", "", prob_info$issue)
-tab <- knitr::kable(
-  x = prob_info,
-  align = c("r", "l", "r", "r", "r"),
-  col.names = c("CCS", "Issue")
-)
-kableExtra::kable_styling(kable_input = tab)
-```
-
-
-
 ### Other diseases {.tabset .tabset-fade}
 Considering influenza peaks in the winter months (December, Janudary, February, and March), we are looking for other diseases that also peak in these months. The decomposition of the disease series below are organized by their seasonality (winter, summer, and no seasonality).
 
 #### Winter seasonality
-A diseases was classified to have winter seasonality if its global correlation with influenza was greater than or equal to 0.60. There were 14 diseases that met this criteria.
+A diseases was classified to have winter seasonality if its global correlation with influenza was greater than or equal to 0.60. There were 15 diseases that met this criteria.
 ```{r}
 for (j in seq_len(nrow(corr_ssm))) {
   signal_extract_plot(
@@ -122,8 +105,9 @@ for (j in seq_len(nrow(corr_ssm))) {
 ```
 
 #### Summer seasonality
-A diseases was classified to have summer seasonality if its global correlation with influenza was less than or equal to -0.60. There were 46 diseases that met this criteria.
+A diseases was classified to have summer seasonality if its global correlation with influenza was less than or equal to -0.60. There were 47 diseases that met this criteria.
 ```{r}
+count <- 0
 for (j in seq_len(nrow(corr_all))) {
   if (corr_all$rho_ssm[j] <= (-1 * ssm_threshold)) {
     signal_extract_plot(
@@ -132,12 +116,13 @@ for (j in seq_len(nrow(corr_all))) {
       main = paste0("CCS: ", corr_all$ccs_code[j], ", ", corr_all$disease[j]),
       oma = c(2, 2, 2, 0)
     )
+    count <- count + 1
   }
 }
 ```
 
 #### No winter or summer seasonality
-A diseases was classified to have no seasonality if its global correlation with influenza was less than 0.60 and greater than -0.60. There were 221 diseases that met this criteria.
+A diseases was classified to have no seasonality if its global correlation with influenza was less than 0.60 and greater than -0.60. There were 212 diseases that met this criteria.
 ```{r}
 for (j in seq_len(nrow(corr_all))) {
   lower <- corr_all$rho_ssm[j] > (-1 * ssm_threshold)
@@ -243,7 +228,7 @@ graphics::hist(
 )
 graphics::abline(v = asm_threshold, col = "firebrick", lty = 3, lwd = 2)
 boonstra::legend_top(
-  legend = expression(rho == 0.3), col = "firebrick",
+  legend = expression(rho == 0.2), col = "firebrick",
   lty = 3, lwd = 2
 )
 corr_ssm <- corr_ssm[order(corr_ssm$rho_asm, decreasing = TRUE), ]

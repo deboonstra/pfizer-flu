@@ -37,7 +37,7 @@ icd_ts <- lapply(
     x <- subset(x = x, select = incidence)
     x <- stats::ts(
       data = x,
-      start = c(2001, 1), frequency = 12
+      start = c(2011, 1), frequency = 12
     )
     return(x)
   }

@@ -1,6 +1,6 @@
 ---
 title: "Presentation of state-space extraction of the time series for all diseases"
-subtitle: "using the young age group (0-5) cohort"
+subtitle: "using the young age group (1-5) cohort"
 author: "D. Erik Boonstra, MS and Joe E. Cavanaugh, PhD"
 date: "`r Sys.Date()`"
 output:

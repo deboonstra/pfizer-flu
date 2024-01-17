@@ -10,4 +10,20 @@ if (!dir.exists("./docs")) {
 }
 
 # Rendering .Rmd files ####
-boonstra::render_all(output_dir = "./docs")
+boonstra::render_all(
+  files = list.files(
+    path = "./outputs",
+    pattern = "*.Rmd",
+    recursive = TRUE,
+    full.names = TRUE
+  )
+)
+boonstra::render_all(
+  files = list.files(
+    path = "./outputs",
+    pattern = "*.Rmd",
+    recursive = TRUE,
+    full.names = TRUE
+  ),
+  output_dir = "./docs"
+)

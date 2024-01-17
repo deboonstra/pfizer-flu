@@ -64,7 +64,7 @@ signal_extract_plot <- function(
   )
   ## Anomaly and error
   astsa::tsplot(
-    x = data$asm, main = "Anomaly + error component", ylab = "", xlab = ""
+    x = data$asm, main = "Local component", ylab = "", xlab = ""
   )
   ## Adding axis labels
   graphics::mtext(text = ylab, side = 2, outer = TRUE, cex = 1, las = 0)

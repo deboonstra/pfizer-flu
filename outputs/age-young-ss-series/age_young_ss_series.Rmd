@@ -36,7 +36,7 @@ Identify diseases that have the same seasonality as influenza, which will allow 
 
 # Results
 
-An analytical approach was devised to estimate the change in incidence for diseases that are seasonally related to influenza. The approach is outlined as we go through this document. The results on this analysis is based on records from Jan. 2001 through December 2019 based on the ICD-9-CM and ICD-10-CM coding systems and included all inpatient and outpatient records for the 0-5 year old age group (i.e., young age group). Prior to splitting the series into their trend, seasonal, and local components, any diseases that did **NOT** have a incidence recorded for every month during the time period of interest were excluded for this analysis. Therefore, we are performing a complete case analysis.
+An analytical approach was devised to estimate the change in incidence for diseases that are seasonally related to influenza. The approach is outlined as we go through this document. The results on this analysis is based on records from Jan. 2001 through December 2019 based on the ICD-9-CM and ICD-10-CM coding systems and included all inpatient and outpatient records for the 1-5 year old age group (i.e., young age group). Prior to splitting the series into their trend, seasonal, and local components, any diseases that did **NOT** have a incidence recorded for every month during the time period of interest were excluded for this analysis. Therefore, we are performing a complete case analysis.
 
 ## Excluded diseases
 ```{r}

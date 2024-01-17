@@ -1,6 +1,6 @@
 # The function of this script file is perform global and local clustering. The
 # threshold for global clustering will be set to +0.6 and threshold for local
-# clustering will be set at +0.3. The series that achieve both of this
+# clustering will be set at +0.2. The series that achieve both of this
 # thresholds will move onto the examination of causation. This clustering
 # algorithm will only be applied to the inpatient and outpatient combined data
 # at the current moment (2023-11-28).

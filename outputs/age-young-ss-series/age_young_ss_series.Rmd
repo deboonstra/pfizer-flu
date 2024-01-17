@@ -103,7 +103,7 @@ signal_extract_plot(
 Considering influenza peaks in the winter months (December, Janudary, February, and March), we are looking for other diseases that also peak in these months. The decomposition of the disease series below are organized by their seasonality (winter, summer, and no seasonality).
 
 #### Winter seasonality
-A diseases was classified to have winter seasonality if its global correlation with influenza was greater than or equal to 0.60. There were 30 diseases that met this criteria.
+A diseases was classified to have winter seasonality if its global correlation with influenza was greater than or equal to 0.60. There were 36 diseases that met this criteria.
 ```{r}
 for (j in seq_len(nrow(corr_ssm))) {
   signal_extract_plot(
@@ -116,7 +116,7 @@ for (j in seq_len(nrow(corr_ssm))) {
 ```
 
 #### Summer seasonality
-A diseases was classified to have summer seasonality if its global correlation with influenza was less than or equal to -0.60. There were 37 diseases that met this criteria.
+A diseases was classified to have summer seasonality if its global correlation with influenza was less than or equal to -0.60. There were 35 diseases that met this criteria.
 ```{r}
 count <- 0
 for (j in seq_len(nrow(corr_all))) {
@@ -133,7 +133,7 @@ for (j in seq_len(nrow(corr_all))) {
 ```
 
 #### No winter or summer seasonality
-A diseases was classified to have no seasonality if its global correlation with influenza was less than 0.60 and greater than -0.60. There were diseases 140 that met this criteria.
+A diseases was classified to have no seasonality if its global correlation with influenza was less than 0.60 and greater than -0.60. There were diseases 129 that met this criteria.
 ```{r}
 count <- 0
 for (j in seq_len(nrow(corr_all))) {

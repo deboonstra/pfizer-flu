@@ -13,7 +13,6 @@ all_extract <- readRDS(
 )
 load("./outputs/age-young-ss-series/clustering.RData")
 
-
 # Subsetting the extracted series object ####
 # Pulling out the diseases that are globally and locally clustered with the flu
 ccs_no <- paste0("ccs", corr_asm$ccs_code)

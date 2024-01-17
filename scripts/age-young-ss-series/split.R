@@ -2,7 +2,7 @@
 # devised by Shumway and Stoffer. Here we are looking to pull out the trend and
 # seasonal components leaving the noise and anomaly combined for all diseases
 # based on CCS codes. We will only be using the inpatient and outpatient
-# combined ICD-9-CM and ICD-10-CM crossover data for the 0-5 age group.
+# combined ICD-9-CM and ICD-10-CM crossover data for the 1-5 age group.
 
 # Importing libraries and functions ####
 R <- list.files(path = "./R", pattern = "*.R", full.names = TRUE)
@@ -14,14 +14,14 @@ if (!dir.exists("./outputs/age-young-ss-series/")) {
 }
 
 # Importing data ####
-load("./data/final-incidence-series/age_incidence.RData")
+load("./data/final-incidence-series/age_incidence_1_17_24.RData")
 
 # Preparing data for analysis ####
 
 ## Pulling unweighted series from ICD crossover cohort ####
 icd <- subset(
   x = age_incidence,
-  subset = age_group == "0-5"
+  subset = age_group == "1-5"
 )
 
 ### Transforming each series into ts objects ####

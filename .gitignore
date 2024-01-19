@@ -17,7 +17,7 @@ figures
 explore
 
 # Outputs
-**/*.html
+outputs/**/*.html
 
 # Tables
 **/*.pdf

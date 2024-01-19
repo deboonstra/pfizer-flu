@@ -1,0 +1,7 @@
+---
+title: "Blame the Flu"
+authors: "Joesph E. Cavanaugh, PhD and D. Erik Boonstra, MS"
+output: html_document
+---
+
+The *Blame the Flu* project is a study funded by Pfizer to investigate the impact that diagnoses of flu have on other diseases and infections.

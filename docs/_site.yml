@@ -1,0 +1,15 @@
+name: "Blame the flu"
+output_dir: "."
+navbar:
+  title: "Blame the flu"
+  type: inverse
+  right:
+    - text: "Github"
+    - icon: fa-github
+    - href: https://github.com/deboonstra/pfizer-flu
+output:
+  html_document:
+    theme: flatly
+    toc: true
+    toc_float: true
+    toc_depth: 3

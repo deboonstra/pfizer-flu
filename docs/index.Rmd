@@ -4,4 +4,5 @@ authors: "Joesph E. Cavanaugh, PhD and D. Erik Boonstra, MS"
 output: html_document
 ---
 
-The *Blame the Flu* project is a study funded by Pfizer to investigate the impact that diagnoses of flu have on other diseases and infections.
+# Purpose
+The *Blame the Flu* project is a study funded by Pfizer to identify diseases that have the same seasonality as influenza, which will allow relations to be established between influenza and the diseases. The primary goal is to determined if obtaining the current variant of influenza vaccine will reduce the incidence rate of diseases seasonally related to influenza.

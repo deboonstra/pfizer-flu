@@ -10,12 +10,12 @@ sapply(R, source, .GlobalEnv)
 
 ## Series ####
 all_series <- readRDS(
-  file = "./outputs/crossover-ss-series/crossover_all_series.rds"
+  file = "./outputs/icd-crossover-ss-series/all_series.rds"
 )
 
 ## Models ###
 all_models <- readRDS(
-  file = "./outputs/crossover-ss-series/crossover_all_models.rds"
+  file = "./outputs/icd-crossover-ss-series/all_models.rds"
 )
 
 # Extraction ####
@@ -33,5 +33,5 @@ names(all_extract) <- names(all_models)
 # Exporting results ####
 saveRDS(
   object = all_extract,
-  file = "./outputs/crossover-ss-series/crossover_all_extract.rds"
+  file = "./outputs/icd-crossover-ss-series/all_extract.rds"
 )

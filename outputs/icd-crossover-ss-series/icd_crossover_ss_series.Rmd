@@ -20,14 +20,14 @@ knitr::opts_chunk$set(echo = FALSE, out.width = "100%", fig.align = "center")
 
 ```{r resultdata, include = FALSE}
 all_extract <- readRDS(
-  file = "./outputs/crossover-ss-series/crossover_all_extract.rds"
+  file = "./outputs/icd-crossover-ss-series/all_extract.rds"
 )
-load("./outputs/crossover-ss-series/clustering.RData")
+load("./outputs/icd-crossover-ss-series/clustering.RData")
 change <- readRDS(
-  file = "./outputs/crossover-ss-series/incidence_change.rds"
+  file = "./outputs/icd-crossover-ss-series/incidence_change.rds"
 )
 bad_diseases <- readRDS(
-  file = "./outputs/crossover-ss-series/crossover_bad_diseases.rds"
+  file = "./outputs/icd-crossover-ss-series/bad_diseases.rds"
 )
 ```
 

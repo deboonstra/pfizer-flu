@@ -11,10 +11,10 @@ sapply(R, source, .GlobalEnv)
 
 # Importing series abstraction ####
 all_extract <- readRDS(
-  file = "./outputs/crossover-ss-series/crossover_all_extract.rds"
+  file = "./outputs/icd-crossover-ss-series/all_extract.rds"
 )
 all_series <- readRDS(
-  file = "./outputs/crossover-ss-series/crossover_all_series.rds"
+  file = "./outputs/icd-crossover-ss-series/all_series.rds"
 )
 
 ## Importing CCS names ####
@@ -85,5 +85,5 @@ corr_asm <- subset(
 # Exporting ####
 save(
   corr_all, corr_ssm, corr_asm, ssm_threshold, asm_threshold,
-  file = "./outputs/crossover-ss-series/clustering.RData"
+  file = "./outputs/icd-crossover-ss-series/clustering.RData"
 )

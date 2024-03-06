@@ -9,12 +9,12 @@ sapply(R, source, .GlobalEnv)
 
 # Importing data and results ####
 all_series <- readRDS(
-  file = "./outputs/crossover-ss-series/crossover_all_series.rds"
+  file = "./outputs/icd-crossover-ss-series/all_series.rds"
 )
 cause_mods <- readRDS(
-  file = "./outputs/crossover-ss-series/causation_mods.rds"
+  file = "./outputs/icd-crossover-ss-series/causation_mods.rds"
 )
-load("./outputs/crossover-ss-series/clustering.RData")
+load("./outputs/icd-crossover-ss-series/clustering.RData")
 
 # Subsetting the series object ####
 # Pulling out the diseases that are globally and locally clustered with the flu
@@ -49,5 +49,5 @@ change <- dplyr::bind_rows(change)
 # Exporting ####
 saveRDS(
   object = change,
-  file = "./outputs/crossover-ss-series/incidence_change.rds"
+  file = "./outputs/icd-crossover-ss-series/incidence_change.rds"
 )

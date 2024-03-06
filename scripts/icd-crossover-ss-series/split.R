@@ -9,8 +9,8 @@ R <- list.files(path = "./R", pattern = "*.R", full.names = TRUE)
 sapply(R, source, .GlobalEnv)
 
 # Creating output directory ####
-if (!dir.exists("./outputs/crossover-ss-series/")) {
-  dir.create("./outputs/crossover-ss-series/")
+if (!dir.exists("./outputs/icd-crossover-ss-series/")) {
+  dir.create("./outputs/icd-crossover-ss-series/")
 }
 
 # Importing data ####
@@ -145,24 +145,24 @@ if (sum(convergence) > 0) {
 ## Series ####
 saveRDS(
   object = icd_ts,
-  file = "./outputs/crossover-ss-series/crossover_all_series.rds"
+  file = "./outputs/icd-crossover-ss-series/all_series.rds"
 )
 if (sum(convergence) > 0) {
   saveRDS(
     object = icd_ts_issue,
-    file = "./outputs/crossover-ss-series/crossover_all_series_issue.rds"
+    file = "./outputs/icd-crossover-ss-series/all_series_issue.rds"
   )
 }
 
 ## Models ####
 saveRDS(
   object = all_models,
-  file = "./outputs/crossover-ss-series/crossover_all_models.rds"
+  file = "./outputs/icd-crossover-ss-series/all_models.rds"
 )
 if (sum(convergence) > 0) {
   saveRDS(
     object = all_models_issue,
-    file = "./outputs/crossover-ss-series/crossover_all_models_issue.rds"
+    file = "./outputs/icd-crossover-ss-series/all_models_issue.rds"
   )
 }
 
@@ -170,6 +170,6 @@ if (sum(convergence) > 0) {
 if (length(valid_diseases) < original_len) {
   saveRDS(
     object = bad_diseases,
-    file = "./outputs/crossover-ss-series/crossover_bad_diseases.rds"
+    file = "./outputs/icd-crossover-ss-series/bad_diseases.rds"
   )
 }

@@ -9,9 +9,9 @@ sapply(R, source, .GlobalEnv)
 
 # Importing data and correlation matrices ####
 all_extract <- readRDS(
-  file = "./outputs/crossover-ss-series/crossover_all_extract.rds"
+  file = "./outputs/icd-crossover-ss-series/all_extract.rds"
 )
-load("./outputs/crossover-ss-series/clustering.RData")
+load("./outputs/icd-crossover-ss-series/clustering.RData")
 
 
 # Subsetting the extracted series object ####
@@ -31,5 +31,5 @@ for (j in seq_along(cause_extract)) {
 # Exporting models ####
 saveRDS(
   object = cause_mods,
-  file = "./outputs/crossover-ss-series/causation_mods.rds"
+  file = "./outputs/icd-crossover-ss-series/causation_mods.rds"
 )

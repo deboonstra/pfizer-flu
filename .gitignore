@@ -21,6 +21,7 @@ outputs/**/*.html
 
 # Tables
 **/*.pdf
+**/*.html
 
 # Resources
 resources

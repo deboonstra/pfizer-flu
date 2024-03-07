@@ -1,0 +1,90 @@
+"age_cohort","ccs_code","disease","pct","relative_change"
+"Age: <2",246,"Fever of unknown origin",0.6,0.07279825079136
+"Age: <2",252,"Malaise and fatigue",0.6,0.0360198281867923
+"Age: 2-4",2,"Septicemia (except in labor)",0.6,0.0888151580855656
+"Age: 2-4",7,"Viral infection",0.6,0.0761605123761714
+"Age: 2-4",92,"Otitis media and related conditions",0.6,0.209074928203047
+"Age: 2-4",126,"Other upper respiratory infections",0.6,0.168205481387074
+"Age: 2-4",133,"Other lower respiratory disease",0.6,0.20063580502957
+"Age: 2-4",246,"Fever of unknown origin",0.6,0.150502815741208
+"Age: 2-4",252,"Malaise and fatigue",0.6,0.0561471991799645
+"Age: 5-11",2,"Septicemia (except in labor)",0.6,0.0659503858445148
+"Age: 5-11",3,"Bacterial infection; unspecified site",0.6,0.150033602914631
+"Age: 5-11",7,"Viral infection",0.6,0.085322180715697
+"Age: 5-11",55,"Fluid and electrolyte disorders",0.6,0.105981759520647
+"Age: 5-11",63,"Diseases of white blood cells",0.6,0.0495383260230571
+"Age: 5-11",84,"Headache; including migraine",0.6,0.0378946718238977
+"Age: 5-11",92,"Otitis media and related conditions",0.6,0.158541107196957
+"Age: 5-11",122,"Pneumonia (except that caused by tuberculosis or sexually transmitted disease)",0.6,0.200011808635868
+"Age: 5-11",124,"Acute and chronic tonsillitis",0.6,0.0698478263581547
+"Age: 5-11",125,"Acute bronchitis",0.6,0.241373814254757
+"Age: 5-11",126,"Other upper respiratory infections",0.6,0.195285384703421
+"Age: 5-11",127,"Chronic obstructive pulmonary disease and bronchiectasis",0.6,0.21919089116288
+"Age: 5-11",130,"Pleurisy; pneumothorax; pulmonary collapse",0.6,0.0732360234316383
+"Age: 5-11",131,"Respiratory failure; insufficiency; arrest (adult)",0.6,0.0460453219115524
+"Age: 5-11",133,"Other lower respiratory disease",0.6,0.176901293011742
+"Age: 5-11",246,"Fever of unknown origin",0.6,0.203576595043884
+"Age: 5-11",250,"Nausea and vomiting",0.6,0.131370931395501
+"Age: 5-11",252,"Malaise and fatigue",0.6,0.0857981451903715
+"Age: 12-17",3,"Bacterial infection; unspecified site",0.6,0.0541301060565094
+"Age: 12-17",7,"Viral infection",0.6,0.0636972261584353
+"Age: 12-17",92,"Otitis media and related conditions",0.6,0.091504592608851
+"Age: 12-17",122,"Pneumonia (except that caused by tuberculosis or sexually transmitted disease)",0.6,0.177161748387882
+"Age: 12-17",124,"Acute and chronic tonsillitis",0.6,0.0653720761456826
+"Age: 12-17",125,"Acute bronchitis",0.6,0.252731387902989
+"Age: 12-17",126,"Other upper respiratory infections",0.6,0.212160907875167
+"Age: 12-17",127,"Chronic obstructive pulmonary disease and bronchiectasis",0.6,0.225430434602049
+"Age: 12-17",133,"Other lower respiratory disease",0.6,0.154676369665457
+"Age: 12-17",246,"Fever of unknown origin",0.6,0.227150039939016
+"Age: 12-17",247,"Lymphadenitis",0.6,0.0415807560964236
+"Age: 12-17",250,"Nausea and vomiting",0.6,0.102819015166461
+"Age: 12-17",252,"Malaise and fatigue",0.6,0.0716708470510984
+"Age: 18-34",92,"Otitis media and related conditions",0.6,0.0871929563279858
+"Age: 18-34",122,"Pneumonia (except that caused by tuberculosis or sexually transmitted disease)",0.6,0.142232904072669
+"Age: 18-34",125,"Acute bronchitis",0.6,0.220319779645917
+"Age: 18-34",126,"Other upper respiratory infections",0.6,0.164944457029499
+"Age: 18-34",127,"Chronic obstructive pulmonary disease and bronchiectasis",0.6,0.186795889908789
+"Age: 18-34",130,"Pleurisy; pneumothorax; pulmonary collapse",0.6,0.0241014634622637
+"Age: 18-34",133,"Other lower respiratory disease",0.6,0.109215370919397
+"Age: 18-34",246,"Fever of unknown origin",0.6,0.164048021840736
+"Age: 35-44",7,"Viral infection",0.6,0.0541938921642837
+"Age: 35-44",92,"Otitis media and related conditions",0.6,0.0925723785417664
+"Age: 35-44",122,"Pneumonia (except that caused by tuberculosis or sexually transmitted disease)",0.6,0.158302106890026
+"Age: 35-44",125,"Acute bronchitis",0.6,0.243487509651776
+"Age: 35-44",126,"Other upper respiratory infections",0.6,0.199081277186713
+"Age: 35-44",127,"Chronic obstructive pulmonary disease and bronchiectasis",0.6,0.178447508079223
+"Age: 35-44",128,"Asthma",0.6,0.049443865845441
+"Age: 35-44",130,"Pleurisy; pneumothorax; pulmonary collapse",0.6,0.031353498305337
+"Age: 35-44",133,"Other lower respiratory disease",0.6,0.10824854913333
+"Age: 35-44",246,"Fever of unknown origin",0.6,0.166016444881618
+"Age: 45-54",7,"Viral infection",0.6,0.0484462440263187
+"Age: 45-54",92,"Otitis media and related conditions",0.6,0.0759329114776632
+"Age: 45-54",122,"Pneumonia (except that caused by tuberculosis or sexually transmitted disease)",0.6,0.153838954088374
+"Age: 45-54",125,"Acute bronchitis",0.6,0.255859718241801
+"Age: 45-54",126,"Other upper respiratory infections",0.6,0.2090743115239
+"Age: 45-54",127,"Chronic obstructive pulmonary disease and bronchiectasis",0.6,0.119189959558541
+"Age: 45-54",128,"Asthma",0.6,0.0470718036119701
+"Age: 45-54",130,"Pleurisy; pneumothorax; pulmonary collapse",0.6,0.0229006947761881
+"Age: 45-54",131,"Respiratory failure; insufficiency; arrest (adult)",0.6,0.023296210378094
+"Age: 45-54",133,"Other lower respiratory disease",0.6,0.088600166148226
+"Age: 45-54",246,"Fever of unknown origin",0.6,0.145490829744732
+"Age: 55-64",7,"Viral infection",0.6,0.032769871874751
+"Age: 55-64",122,"Pneumonia (except that caused by tuberculosis or sexually transmitted disease)",0.6,0.138499708539575
+"Age: 55-64",125,"Acute bronchitis",0.6,0.263019771792125
+"Age: 55-64",126,"Other upper respiratory infections",0.6,0.217851631940496
+"Age: 55-64",127,"Chronic obstructive pulmonary disease and bronchiectasis",0.6,0.0635261086047905
+"Age: 55-64",128,"Asthma",0.6,0.0427577456658162
+"Age: 55-64",130,"Pleurisy; pneumothorax; pulmonary collapse",0.6,0.0183157096533514
+"Age: 55-64",131,"Respiratory failure; insufficiency; arrest (adult)",0.6,0.0286246832603551
+"Age: 55-64",133,"Other lower respiratory disease",0.6,0.068901642487212
+"Age: 55-64",246,"Fever of unknown origin",0.6,0.110779626336752
+"Age: >64",100,"Acute myocardial infarction",0.6,0.0276360144465075
+"Age: >64",107,"Cardiac arrest and ventricular fibrillation",0.6,0.0398430506585299
+"Age: >64",122,"Pneumonia (except that caused by tuberculosis or sexually transmitted disease)",0.6,0.128083194291095
+"Age: >64",125,"Acute bronchitis",0.6,0.299295169485045
+"Age: >64",126,"Other upper respiratory infections",0.6,0.257013854466
+"Age: >64",129,"Aspiration pneumonitis; food/vomitus",0.6,0.0451603230716152
+"Age: >64",130,"Pleurisy; pneumothorax; pulmonary collapse",0.6,0.0296444814863506
+"Age: >64",131,"Respiratory failure; insufficiency; arrest (adult)",0.6,0.0530854866692219
+"Age: >64",133,"Other lower respiratory disease",0.6,0.0500960450125457
+"Age: >64",246,"Fever of unknown origin",0.6,0.0778088582986904

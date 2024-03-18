@@ -10,9 +10,6 @@ data/incidence-series/*
 !data/incidence-series/README.md
 data/final-incidence-series/*
 
-# Figures
-figures
-
 # Explore
 explore
 
@@ -20,8 +17,8 @@ explore
 outputs/**/*.html
 
 # Tables
-**/*.pdf
-**/*.html
+tables/**/*.pdf
+tables/**/*.html
 
 # Resources
 resources

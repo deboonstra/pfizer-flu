@@ -8,9 +8,13 @@ R <- list.files(path = "./R", pattern = "*.R", full.names = TRUE)
 sapply(R, source, .GlobalEnv)
 
 # Importing data and results ####
-all_series <- readRDS(file = "./outputs/all-ss-series/all_series.rds")
-cause_mods <- readRDS(file = "./outputs/all-ss-series/causation_mods.rds")
-load("./outputs/all-ss-series/clustering.RData")
+all_series <- readRDS(
+  file = "./outputs/dec23-report-ss-series/all_series.rds"
+)
+cause_mods <- readRDS(
+  file = "./outputs/dec23-report-ss-series/causation_mods.rds"
+)
+load("./outputs/dec23-report-ss-series/clustering.RData")
 
 # Subsetting the series object ####
 # Pulling out the diseases that are globally and locally clustered with the flu
@@ -43,4 +47,7 @@ for (p in seq_along(change)) {
 change <- dplyr::bind_rows(change)
 
 # Exporting ####
-saveRDS(object = change, file = "./outputs/all-ss-series/incidence_change.rds")
+saveRDS(
+  object = change,
+  file = "./outputs/dec23-report-ss-series/incidence_change.rds"
+)

@@ -9,10 +9,10 @@ sapply(R, source, .GlobalEnv)
 # Importing results ####
 
 ## Series ####
-icd9_ts <- readRDS(file = "./outputs/all-ss-series/all_series.rds")
+icd9_ts <- readRDS(file = "./outputs/dec23-report-ss-series/all_series.rds")
 
 ## Models ###
-all_models <- readRDS(file = "./outputs/all-ss-series/all_models.rds")
+all_models <- readRDS(file = "./outputs/dec23-report-ss-series/all_models.rds")
 
 # Extraction ####
 all_extract <- lapply(
@@ -27,4 +27,7 @@ all_extract <- lapply(
 names(all_extract) <- names(all_models)
 
 # Exporting results ####
-saveRDS(object = all_extract, file = "./outputs/all-ss-series/all_extract.rds")
+saveRDS(
+  object = all_extract,
+  file = "./outputs/dec23-report-ss-series/all_extract.rds"
+)

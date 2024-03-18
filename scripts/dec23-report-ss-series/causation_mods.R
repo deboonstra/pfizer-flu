@@ -8,8 +8,10 @@ R <- list.files(path = "./R", pattern = "*.R", full.names = TRUE)
 sapply(R, source, .GlobalEnv)
 
 # Importing data and correlation matrices ####
-all_extract <- readRDS(file = "./outputs/all-ss-series/all_extract.rds")
-load("./outputs/all-ss-series/clustering.RData")
+all_extract <- readRDS(
+  file = "./outputs/dec23-report-ss-series/all_extract.rds"
+)
+load("./outputs/dec23-report-ss-series/clustering.RData")
 
 
 # Subsetting the extracted series object ####
@@ -29,5 +31,5 @@ for (j in seq_along(cause_extract)) {
 # Exporting models ####
 saveRDS(
   object = cause_mods,
-  file = "./outputs/all-ss-series/causation_mods.rds"
+  file = "./outputs/dec23-report-ss-series/causation_mods.rds"
 )

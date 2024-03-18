@@ -10,7 +10,9 @@ R <- list.files(path = "./R", pattern = "*.R", full.names = TRUE)
 sapply(R, source, .GlobalEnv)
 
 # Importing series abstraction ####
-all_extract <- readRDS(file = "./outputs/all-ss-series/all_extract.rds")
+all_extract <- readRDS(
+  file = "./outputs/dec23-report-ss-series/all_extract.rds"
+)
 
 ## Importing CCS names ####
 ccs_labels <- utils::read.csv(file = "./data/ccs-series/ccs_labels.csv")
@@ -80,5 +82,5 @@ corr_asm <- subset(
 # Exporting ####
 save(
   corr_all, corr_ssm, corr_asm,
-  file = "./outputs/all-ss-series/clustering.RData"
+  file = "./outputs/dec23-report-ss-series/clustering.RData"
 )

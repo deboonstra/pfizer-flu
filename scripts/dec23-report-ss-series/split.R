@@ -9,8 +9,8 @@ R <- list.files(path = "./R", pattern = "*.R", full.names = TRUE)
 sapply(R, source, .GlobalEnv)
 
 # Creating output directory ####
-if (!dir.exists("./outputs/all-ss-series/")) {
-  dir.create("./outputs/all-ss-series/")
+if (!dir.exists("./outputs/dec23-report-ss-series/")) {
+  dir.create("./outputs/dec23-report-ss-series/")
 }
 
 # Importing data ####
@@ -93,7 +93,13 @@ cat(sum(convergence), "did not converge\n")
 # Exporting results ####
 
 ## Series ####
-saveRDS(object = icd9_ts, file = "./outputs/all-ss-series/all_series.rds")
+saveRDS(
+  object = icd9_ts,
+  file = "./outputs/dec23-report-ss-series/all_series.rds"
+)
 
 ## Models ####
-saveRDS(object = all_models, file = "./outputs/all-ss-series/all_models.rds")
+saveRDS(
+  object = all_models,
+  file = "./outputs/dec23-report-ss-series/all_models.rds"
+)

@@ -40,7 +40,7 @@ signal_extract <- function(data, object) {
 ## Creating a plotting function ####
 signal_extract_plot <- function(
   data, ylim = c(-3, 3), ylab = "Incidence per 100,000", xlab = "Time",
-  main = "", oma = c(2, 2, 0, 0)
+  main = "", oma = c(2, 2, 0, 0), ...
 ) {
 
   # Parameter checking ####
@@ -52,19 +52,22 @@ signal_extract_plot <- function(
   graphics::par(mfrow = c(4, 1), oma = oma)
   ## Observations
   astsa::tsplot(
-    x = data$obs, main = "Observed series", ylab = "", xlab = "", ylim = ylim
+    x = data$obs, main = "Observed series", ylab = "", xlab = "",
+    ylim = ylim, ...
   )
   ## Trend
   astsa::tsplot(
-    x = data$tsm, main = "Trend component", ylab = "", xlab = "", ylim = ylim
+    x = data$tsm, main = "Trend component", ylab = "", xlab = "",
+    ylim = ylim, ...
   )
   ## Seasonal
   astsa::tsplot(
-    x = data$ssm, main = "Seasonal component", ylab = "", xlab = "", ylim = ylim
+    x = data$ssm, main = "Seasonal component", ylab = "", xlab = "",
+    ylim = ylim, ...
   )
   ## Anomaly and error
   astsa::tsplot(
-    x = data$asm, main = "Local component", ylab = "", xlab = ""
+    x = data$asm, main = "Local component", ylab = "", xlab = "", ...
   )
   ## Adding axis labels
   graphics::mtext(text = ylab, side = 2, outer = TRUE, cex = 1, las = 0)

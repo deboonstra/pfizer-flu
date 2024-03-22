@@ -22,3 +22,6 @@ tables/**/*.html
 
 # Resources
 resources
+
+# Figures
+figures/**/*.jpeg

@@ -1,0 +1,30 @@
+# System files
+.DS_Store
+
+# Data
+data/ccs-series/*
+!data/ccs-series/README.md
+data/enrollment-series/*
+!data/enrollment-series/README.md
+data/incidence-series/*
+!data/incidence-series/README.md
+data/final-incidence-series/*
+
+# Explore
+explore
+
+# Outputs
+outputs/**/*.html
+outputs/**/*.rds
+outputs/**/*.rda
+outputs/**/*.RData
+
+# Tables
+tables/**/*.pdf
+tables/**/*.html
+
+# Resources
+resources
+
+# Figures
+figures/**/*.jpeg

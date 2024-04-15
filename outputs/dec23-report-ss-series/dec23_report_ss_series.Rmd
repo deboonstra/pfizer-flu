@@ -1,0 +1,303 @@
+---
+title: "Presentation of state-space extraction of the time series for all diseases"
+subtitle: "December 2023 report to Pfizer"
+author: "D. Erik Boonstra, MS and Joe E. Cavanaugh, PhD"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    toc: true
+    toc_depth: 3
+    toc_float: TRUE
+---
+
+```{r setup, include = FALSE}
+R <- list.files(path = "./R", pattern = "*.R", full.names = TRUE)
+sapply(R, source, .GlobalEnv)
+library(knitr)
+library(kableExtra)
+knitr::opts_chunk$set(echo = FALSE, out.width = "100%", fig.align = "center")
+```
+
+```{r resultdata, include = FALSE}
+all_extract <- readRDS(
+  file = "./outputs/dec23-report-ss-series/all_extract.rds"
+)
+load("./outputs/dec23-report-ss-series/clustering.RData")
+change <- readRDS(
+  file = "./outputs/dec23-report-ss-series/incidence_change.rds"
+)
+ssm_threshold <- 0.6
+asm_threshold <- 0.3
+```
+
+# Purpose
+Identify diseases that have the same seasonality as influenza, which will allow relations to be established between influenza and the diseases. The primary goal is to determined if obtaining the current variant of influenza vaccine will reduce the incidence rate of diseases seasonally related to influenza.
+
+# Results
+
+An analytical approach was devised to estimate the change in incidence for diseases that are seasonally related to influenza. The approach is outlined as we go through this document. The results on this analysis is based on records from 2003 through 2013 based on the ICD-9-CM coding system and included all inpatient and outpatient records.
+
+## Splitting of series 
+First, all diseases had their observed incidence series extracted into trend, seasonal, and anomaly + error components (i.e., state-space modeling) based on Kalman filtering and smoothing. This extraction of series borrowed from the work of fourth edition of Shumway and Stoffer's *Time Series Analysis and Its Applications With R Examples* and Tang and Cavanaugh (2015). The trend component was modeled with a random walk process, while it was assumed the seasonal component is expected to sum to zero over a complete period or 12 months.
+
+### Influenza
+```{r}
+signal_extract_plot(
+  data = all_extract$ccs123,
+  ylab = "Standardized log(Incidence per 100,000)",
+  main = "CCS: 123, Influenza", oma = c(2, 2, 2, 0)
+)
+```
+
+### Other diseases {.tabset .tabset-fade}
+Considering influenza peaks in the winter months (December, Janudary, February, and March), we are looking for other diseases that also peak in these months. The decomposition of the disease series below are organized by their seasonality (winter, summer, and no seasonality).
+
+#### Winter seasonality
+A diseases was classified to have winter seasonality if its global correlation with influenza was greater than or equal to 0.60. There were 18 diseases that met this criteria.
+```{r}
+for (j in seq_len(nrow(corr_ssm))) {
+  signal_extract_plot(
+    data = all_extract[[paste0("ccs", corr_ssm$ccs_code[j])]],
+    ylab = "Standardized log(Incidence per 100,000)",
+    main = paste0("CCS: ", corr_ssm$ccs_code[j], ", ", corr_ssm$disease[j]),
+    oma = c(2, 2, 2, 0)
+  )
+}
+```
+
+#### Summer seasonality
+A diseases was classified to have summer seasonality if its global correlation with influenza was less than or equal to -0.60. There were 44 diseases that met this criteria.
+```{r}
+count <- 0
+for (j in seq_len(nrow(corr_all))) {
+  if (corr_all$rho_ssm[j] <= (-1 * ssm_threshold)) {
+    signal_extract_plot(
+      data = all_extract[[paste0("ccs", corr_all$ccs_code[j])]],
+      ylab = "Standardized log(Incidence per 100,000)",
+      main = paste0("CCS: ", corr_all$ccs_code[j], ", ", corr_all$disease[j]),
+      oma = c(2, 2, 2, 0)
+    )
+    count <- count + 1
+  }
+}
+```
+
+#### No winter or summer seasonality
+A diseases was classified to have no seasonality if its global correlation with influenza was less than 0.60 and greater than -0.60. There were 220 diseases that met this criteria.
+```{r}
+for (j in seq_len(nrow(corr_all))) {
+  lower <- corr_all$rho_ssm[j] > (-1 * ssm_threshold)
+  upper <- corr_all$rho_ssm[j] < ssm_threshold
+  if (lower && upper) {
+    signal_extract_plot(
+      data = all_extract[[paste0("ccs", corr_all$ccs_code[j])]],
+      ylab = "Standardized log(Incidence per 100,000)",
+      main = paste0("CCS: ", corr_all$ccs_code[j], ", ", corr_all$disease[j]),
+      oma = c(2, 2, 2, 0)
+    )
+  }
+}
+```
+
+## Clustering of diseases
+
+With the disease series decomposed into their trend, seasonal, and anomaly + error components, we can being determining which diseases are seasonally related to the influenza. We imployed a simply correlation based clustering algorithm to determine which diseases are related to influenza.
+
+### Global (Seasonal) clustering {.tabset .tabset-fade}
+The first step in the clustering algorithm is to determine which seasonal components of the diseases are highly correlated with the seasonal component of influenza. We set the correlation filtering threshold at +0.6 to define "highly correlated".
+```{r}
+graphics::hist(
+  x = corr_all$rho_ssm, xlim = c(-1, 1),
+  breaks = seq(-1, 1, by = 0.1),
+  xlab = expression(rho), main = "",
+  col = "gray", border = "white"
+)
+col <- boonstra::pal(3)
+graphics::abline(v = ssm_threshold, col = col[1], lty = 3, lwd = 2)
+graphics::abline(v = -ssm_threshold, col = col[2], lty = 3, lwd = 2)
+graphics::abline(v = 0, col = col[3], lty = 3, lwd = 2)
+boonstra::legend_top(
+  legend = c(
+    expression(rho == 0.6),
+    expression(rho == -0.6),
+    expression(rho == 0)
+  ),
+  col = col, lty = 3, lwd = 2
+)
+```
+
+#### Winter seasonality
+```{r}
+corr_ssm <- corr_ssm[order(corr_ssm$rho_ssm, decreasing = TRUE), ]
+row.names(corr_ssm) <- NULL
+tab <- knitr::kable(
+  x = subset(corr_ssm, select = c(ccs_code, disease, rho_ssm)),
+  digits = 4, align = c("r", "l", "r"),
+  col.names = c(
+    "CCS", "Disease", "Global correlation"
+  )
+)
+kableExtra::kable_styling(kable_input = tab)
+```
+
+#### Summer seasonality
+As a reminder, diseases were classified as having summer seasonality if their global correlation value was less than or equal to -0.6.
+```{r}
+corr_sum <- subset(
+  x = corr_all,
+  subset = rho_ssm <= (-1 * ssm_threshold)
+)
+corr_sum <- corr_sum[order(corr_sum$rho_ssm, decreasing = TRUE), ]
+row.names(corr_sum) <- NULL
+tab <- knitr::kable(
+  x = subset(corr_sum, select = c(ccs_code, disease, rho_ssm)),
+  digits = 4, align = c("r", "l", "r"),
+  col.names = c(
+    "CCS", "Disease", "Global correlation"
+  )
+)
+kableExtra::kable_styling(kable_input = tab)
+```
+
+#### No winter or summer seasonality
+Here are a few global correlation values for the diseases that are positively correlated with influenza.
+```{r}
+corr_no <- subset(
+  x = corr_all,
+  subset = (rho_ssm > 0) & (rho_ssm < ssm_threshold)
+)
+corr_no <- corr_no[order(corr_no$rho_ssm, decreasing = TRUE), ]
+row.names(corr_no) <- NULL
+tab <- knitr::kable(
+  x = subset(corr_no, select = c(ccs_code, disease, rho_ssm)),
+  digits = 4, align = c("r", "l", "r"),
+  col.names = c(
+    "CCS", "Disease", "Global correlation"
+  )
+)
+kableExtra::kable_styling(kable_input = tab)
+```
+
+### Local (Anomaly + error) clustering
+Of the diseases that have a seasonal component that is "highly correlated" correlated with the seasonal component of influenza, they are examined to see if their anomaly + error component is also correlated with anomaly + error component of influenza. This examination of the anomaly + error components allows us to determine relations between the diseases once the trend and seasonal components have be stripped away. The correlation threshold for this examination is set to +0.2.
+```{r}
+graphics::hist(
+  x = corr_ssm$rho_asm, xlim = c(-1, 1),
+  breaks = seq(-1, 1, by = 0.05),
+  xlab = expression(rho), main = "",
+  col = "gray", border = "white"
+)
+graphics::abline(v = asm_threshold, col = "firebrick", lty = 3, lwd = 2)
+boonstra::legend_top(
+  legend = expression(rho == 0.3), col = "firebrick",
+  lty = 3, lwd = 2
+)
+corr_ssm <- corr_ssm[order(corr_ssm$rho_asm, decreasing = TRUE), ]
+corr_ssm$asm_cluster <- ifelse(
+  test = corr_ssm$ccs_code %in% corr_asm$ccs_code,
+  yes = "***",
+  no = ""
+)
+row.names(corr_ssm) <- NULL
+tab <- knitr::kable(
+  x = corr_ssm,
+  digits = 4, align = c("r", "l", "r", "r", "r"),
+  col.names = c(
+    "CCS", "Disease", "Global correlation", "Local correlation", "Local cluster"
+  )
+)
+kableExtra::kable_styling(kable_input = tab)
+```
+
+## Effects of influenza {.tabset .tabset-fade}
+Finally, the diseases that are globally and locally clustered with influenza are further examined for causation between the diseases and influenza. Simple linear regression models are first constructed for these diseases, where the response variable is the sum of the seasonal and anomaly + error components of the disease of interest and the predictor variable is the sum of the seasonal and anomaly + error components of influenza. While not reported in this document, the effect of influenza on each of these diseases is statistically significant at a trivial 0.05 significance level. Using these linear models, we can estimate the change in mean incidence for each disease during the winter months given we reduce the influenza maximum mean incidence by 20%, 30%, 40%, 50%, and 60% during these months.
+
+```{r}
+change$relative_change <- change$relative_change * 100
+change$pct <- change$pct * 100
+```
+
+### Reduction of 20%
+```{r}
+cc <- subset(change, subset = pct == 20)
+cc <- cc[order(cc$raw_change, decreasing = TRUE), ]
+row.names(cc) <- NULL
+tab <- knitr::kable(
+  x = cc,
+  digits = 4, align = c("l", "l", "r", "r", "r"),
+  col.names = c(
+    "CCS", "Disease", "Reduction (%) in maximum mean influenza incidence",
+    "Raw change in incidence per 100,000 cases",
+    "Relative (%) change in incidence per 100,000 cases"
+  )
+)
+kableExtra::kable_styling(kable_input = tab)
+```
+
+### Reduction of 30%
+```{r}
+cc <- subset(change, subset = pct == 30)
+cc <- cc[order(cc$raw_change, decreasing = TRUE), ]
+row.names(cc) <- NULL
+tab <- knitr::kable(
+  x = cc,
+  digits = 4, align = c("l", "l", "r", "r", "r"),
+  col.names = c(
+    "CCS", "Disease", "Reduction (%) in maximum mean influenza incidence",
+    "Raw change in incidence per 100,000 cases",
+    "Relative (%) change in incidence per 100,000 cases"
+  )
+)
+kableExtra::kable_styling(kable_input = tab)
+```
+
+### Reduction of 40%
+```{r, echo = FALSE}
+cc <- subset(change, subset = pct == 40)
+cc <- cc[order(cc$raw_change, decreasing = TRUE), ]
+row.names(cc) <- NULL
+tab <- knitr::kable(
+  x = cc,
+  digits = 4, align = c("l", "l", "r", "r", "r"),
+  col.names = c(
+    "CCS", "Disease", "Reduction (%) in maximum mean influenza incidence",
+    "Raw change in incidence per 100,000 cases",
+    "Relative (%) change in incidence per 100,000 cases"
+  )
+)
+kableExtra::kable_styling(kable_input = tab)
+```
+
+### Reduction of 50%
+```{r, echo = FALSE}
+cc <- subset(change, subset = pct == 50)
+cc <- cc[order(cc$raw_change, decreasing = TRUE), ]
+row.names(cc) <- NULL
+tab <- knitr::kable(
+  x = cc,
+  digits = 4, align = c("l", "l", "r", "r", "r"),
+  col.names = c(
+    "CCS", "Disease", "Reduction (%) in maximum mean influenza incidence",
+    "Raw change in incidence per 100,000 cases",
+    "Relative (%) change in incidence per 100,000 cases"
+  )
+)
+kableExtra::kable_styling(kable_input = tab)
+```
+
+### Reduction of 60%
+```{r, echo = FALSE}
+cc <- subset(change, subset = pct == 60)
+cc <- cc[order(cc$raw_change, decreasing = TRUE), ]
+row.names(cc) <- NULL
+tab <- knitr::kable(
+  x = cc,
+  digits = 4, align = c("l", "l", "r", "r", "r"),
+  col.names = c(
+    "CCS", "Disease", "Reduction (%) in maximum mean influenza incidence",
+    "Raw change in incidence per 100,000 cases",
+    "Relative (%) change in incidence per 100,000 cases"
+  )
+)
+kableExtra::kable_styling(kable_input = tab)
+```

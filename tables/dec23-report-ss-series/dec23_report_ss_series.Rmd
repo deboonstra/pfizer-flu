@@ -1,0 +1,123 @@
+---
+title: "Tables for state-space extraction of the time series for all diseases"
+subtitle: "December 2023 report for Pfizer"
+author: "D. Erik Boonstra, MS and Joe E. Cavanaugh, PhD"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r setup, include = FALSE}
+R <- list.files(path = "./R", pattern = "*.R", full.names = TRUE)
+sapply(R, source, .GlobalEnv)
+library(knitr)
+library(kableExtra)
+knitr::opts_chunk$set(echo = FALSE, out.width = "100%", fig.align = "center")
+```
+
+```{r resultdata, include = FALSE}
+all_extract <- readRDS(
+  file = "./outputs/dec23-report-ss-series/all_extract.rds"
+)
+load("./outputs/dec23-report-ss-series/clustering.RData")
+change <- readRDS(
+  file = "./outputs/dec23-report-ss-series/incidence_change.rds"
+)
+ssm_threshold <- 0.6
+asm_threshold <- 0.3
+```
+
+# Table 1
+
+\pagebreak
+
+# Table 2
+```{r}
+corr_ssm <- corr_ssm[order(corr_ssm$rho_ssm, decreasing = TRUE), ]
+row.names(corr_ssm) <- NULL
+tab <- knitr::kable(
+  x = subset(corr_ssm, select = c(ccs_code, disease, rho_ssm)),
+  booktabs = TRUE,
+  digits = 4, align = c("r", "l", "r"),
+  col.names = c(
+    "CCS", "Disease", "Global correlation"
+  )
+)
+kableExtra::kable_styling(
+  kable_input = tab, font_size = 8, latex_options = "hold_position"
+)
+```
+
+\pagebreak
+
+# Table 3
+```{r}
+corr_sum <- subset(
+  x = corr_all,
+  subset = rho_ssm <= (-1 * ssm_threshold)
+)
+corr_sum <- corr_sum[order(corr_sum$rho_ssm, decreasing = TRUE), ]
+row.names(corr_sum) <- NULL
+tab <- knitr::kable(
+  x = subset(corr_sum, select = c(ccs_code, disease, rho_ssm)),
+  booktabs = TRUE,
+  digits = 4, align = c("r", "l", "r"),
+  col.names = c(
+    "CCS", "Disease", "Global correlation"
+  )
+)
+kableExtra::kable_styling(
+  kable_input = tab, font_size = 8, latex_options = "hold_position"
+)
+```
+
+\pagebreak
+
+# Table 4
+
+```{r}
+corr_ssm <- corr_ssm[order(corr_ssm$rho_asm, decreasing = TRUE), ]
+row.names(corr_ssm) <- NULL
+tab <- knitr::kable(
+  x = corr_ssm,
+  booktabs = TRUE,
+  digits = 4, align = c("r", "l", "r", "r"),
+  col.names = c(
+    "CCS", "Disease", "Global correlation", "Local correlation"
+  )
+)
+kableExtra::kable_styling(
+  kable_input = tab, font_size = 8,
+  latex_options = c("hold_position", "striped"), stripe_index = 13:18
+)
+```
+
+\pagebreak
+
+# Table 5
+```{r}
+change$relative_change <- change$relative_change * 100
+change$pct <- change$pct * 100
+cc <- subset(change, subset = pct %in% c(20, 60))
+cc <- cc[order(cc$pct, cc$raw_change, decreasing = TRUE), ]
+row.names(cc) <- NULL
+tab <- kableExtra::kbl(
+  x = cc,
+  booktabs = TRUE, escape = FALSE,
+  digits = 4, align = c("l", "l", "r", "r", "r"),
+  col.names = linebreak(
+    x = c(
+      "CCS",
+      "Disease",
+      "Reduction in\nmaximum mean\ninfluenza incidence (\\%)",
+      "Raw change in\nincidence per\n100,000 cases",
+      "Relative change in\nincidence per\n100,000 cases (\\%)"
+    )
+  )
+)
+kableExtra::kable_styling(
+  kable_input = tab, font_size = 6,
+  latex_options = c("hold_position", "striped"),
+  stripe_index = 13:24
+)
+```
+

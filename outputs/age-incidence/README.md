@@ -10,10 +10,7 @@ contains 89 observations and 5 variables that are associated with reducing the p
   - "Age: 2-4",
   - "Age: 5-11",
   - "Age: 12-17",
-  - "Age: 18-34",
-  - "Age: 35-44",
-  - "Age: 45-54",
-  - "Age: 55-64", and
+  - "Age: 18-64", and
   - "Age: >64".
 - `ccs_code`: `int` Clinical classifications software (CCS) code used to aggregate ICD codes.
 - `disease`: `chr` Description of disease associated with the CCS code.
@@ -29,10 +26,7 @@ contains 89 observations and 5 variables that are associated with reducing the p
   - "Age: 2-4",
   - "Age: 5-11",
   - "Age: 12-17",
-  - "Age: 18-34",
-  - "Age: 35-44",
-  - "Age: 45-54",
-  - "Age: 55-64", and
+  - "Age: 18-64", and
   - "Age: >64".
 - `ccs_code`: `int` Clinical classifications software (CCS) code used to aggregate ICD codes.
 - `disease`: `chr` Description of disease associated with the CCS code.

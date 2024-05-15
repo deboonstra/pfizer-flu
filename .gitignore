@@ -22,6 +22,7 @@ outputs/**/*.RData
 # Tables
 tables/**/*.pdf
 tables/**/*.html
+tables/**/*.csv
 
 # Resources
 resources

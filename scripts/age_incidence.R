@@ -16,8 +16,7 @@ age_incidence_rds <- paste0(
   "./outputs/age-",
   c(
     "less2", "2to4", "5to11",
-    "12to17", "18to34", "35to44",
-    "45to54", "55to64", "greater64"
+    "12to17", "18to64", "greater64"
   ),
   "-ss-series/incidence_change.rds"
 )
@@ -26,8 +25,7 @@ incidence_change <- lapply(X = age_incidence_rds, FUN = readRDS)
 ## Adding age cohort variable ####
 age_cohort <- c(
   "Age: <2", "Age: 2-4", "Age: 5-11",
-  "Age: 12-17", "Age: 18-34", "Age: 35-44",
-  "Age: 45-54", "Age: 55-64", "Age: >64"
+  "Age: 12-17", "Age: 18-64", "Age: >64"
 )
 for (j in seq_along(incidence_change)) {
   incidence_change[[j]]$age_cohort <- age_cohort[j]
